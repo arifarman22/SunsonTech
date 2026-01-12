@@ -15,12 +15,18 @@ import InteractiveSearch from "@/components/InteractiveSearch";
 import NotificationCenter from "@/components/NotificationCenter";
 
 const languages = [
-  { code: 'en' as Language, name: 'English', flag: '🇺🇸' },
-  { code: 'es' as Language, name: 'Español', flag: '🇪🇸' },
-  { code: 'fr' as Language, name: 'Français', flag: '🇫🇷' },
-  { code: 'de' as Language, name: 'Deutsch', flag: '🇩🇪' },
-  { code: 'zh' as Language, name: '中文', flag: '🇨🇳' },
-  { code: 'ja' as Language, name: '日本語', flag: '🇯🇵' },
+  { code: 'en' as Language, name: 'English', country: 'United States', flag: '🇺🇸' },
+  { code: 'es' as Language, name: 'Español', country: 'Spain', flag: '🇪🇸' },
+  { code: 'fr' as Language, name: 'Français', country: 'France', flag: '🇫🇷' },
+  { code: 'de' as Language, name: 'Deutsch', country: 'Germany', flag: '🇩🇪' },
+  { code: 'zh' as Language, name: '中文', country: 'China', flag: '🇨🇳' },
+  { code: 'ja' as Language, name: '日本語', country: 'Japan', flag: '🇯🇵' },
+  { code: 'ko' as Language, name: '한국어', country: 'South Korea', flag: '🇰🇷' },
+  { code: 'ar' as Language, name: 'العربية', country: 'Saudi Arabia', flag: '🇸🇦' },
+  { code: 'pt' as Language, name: 'Português', country: 'Brazil', flag: '🇧🇷' },
+  { code: 'ru' as Language, name: 'Русский', country: 'Russia', flag: '🇷🇺' },
+  { code: 'it' as Language, name: 'Italiano', country: 'Italy', flag: '🇮🇹' },
+  { code: 'hi' as Language, name: 'हिन्दी', country: 'India', flag: '🇮🇳' },
 ];
 
 export default function Header() {
@@ -65,37 +71,37 @@ export default function Header() {
               <div className="dropdown-menu absolute top-full left-0 mt-2 w-80 bg-white shadow-2xl rounded-xl border border-gray-100 p-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <h4 className="font-semibold text-sm text-primary mb-3 uppercase tracking-wide">BANKING</h4>
+                    <h4 className="font-semibold text-sm text-primary mb-3 uppercase tracking-wide">{t('category.banking')}</h4>
                     <ul className="space-y-2">
-                      <li><Link href="/products/banking" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50" data-testid="link-banking-products">Cash Deposit Machine CDM</Link></li>
-                      <li><Link href="/products/banking" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">Cash Dispenser ATM</Link></li>
-                      <li><Link href="/products/banking" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">Smart Teller Machine STM</Link></li>
-                      <li><Link href="/products/banking" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">Currency Exchange Kiosk</Link></li>
+                      <li><Link href="/products/banking" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50" data-testid="link-banking-products">{t('products.cdm')}</Link></li>
+                      <li><Link href="/products/banking" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.atm')}</Link></li>
+                      <li><Link href="/products/banking" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.stm')}</Link></li>
+                      <li><Link href="/products/banking" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.exchange')}</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-sm text-primary mb-3 uppercase tracking-wide">HEALTHCARE</h4>
+                    <h4 className="font-semibold text-sm text-primary mb-3 uppercase tracking-wide">{t('category.healthcare')}</h4>
                     <ul className="space-y-2">
-                      <li><Link href="/products/healthcare" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50" data-testid="link-healthcare-products">Hospital Check-in Kiosk</Link></li>
-                      <li><Link href="/products/healthcare" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">Healthcare Kiosk</Link></li>
-                      <li><Link href="/products/healthcare" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">Mobile Charging Station</Link></li>
-                      <li><Link href="/products/healthcare" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">Hotel Check-in Kiosk</Link></li>
+                      <li><Link href="/products/healthcare" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50" data-testid="link-healthcare-products">{t('products.checkin')}</Link></li>
+                      <li><Link href="/products/healthcare" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.healthcare')}</Link></li>
+                      <li><Link href="/products/healthcare" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.charging')}</Link></li>
+                      <li><Link href="/products/healthcare" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.hotel')}</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-sm text-primary mb-3 uppercase tracking-wide">SECURITY</h4>
+                    <h4 className="font-semibold text-sm text-primary mb-3 uppercase tracking-wide">{t('category.security')}</h4>
                     <ul className="space-y-2">
-                      <li><Link href="/products/security" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50" data-testid="link-security-products">PCI Approved EPP</Link></li>
-                      <li><Link href="/products/security" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">Full Metal Keyboard</Link></li>
-                      <li><Link href="/products/security" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">NON PCI Pinpad</Link></li>
+                      <li><Link href="/products/security" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50" data-testid="link-security-products">{t('products.epp')}</Link></li>
+                      <li><Link href="/products/security" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.keyboard')}</Link></li>
+                      <li><Link href="/products/security" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.pinpad')}</Link></li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-sm text-primary mb-3 uppercase tracking-wide">PAYMENT</h4>
+                    <h4 className="font-semibold text-sm text-primary mb-3 uppercase tracking-wide">{t('category.payment')}</h4>
                     <ul className="space-y-2">
-                      <li><Link href="/products/payment" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50" data-testid="link-payment-products">Bitcoin Payment Kiosk</Link></li>
-                      <li><Link href="/products/payment" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">Cash Payment Kiosk</Link></li>
-                      <li><Link href="/products/payment" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">Wall Mount Payment</Link></li>
+                      <li><Link href="/products/payment" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50" data-testid="link-payment-products">{t('products.bitcoin')}</Link></li>
+                      <li><Link href="/products/payment" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.cash')}</Link></li>
+                      <li><Link href="/products/payment" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.wall')}</Link></li>
                     </ul>
                   </div>
                 </div>
@@ -108,10 +114,10 @@ export default function Header() {
               </button>
               <div className="dropdown-menu absolute top-full left-0 mt-2 w-64 bg-white shadow-2xl rounded-xl border border-gray-100 p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                 <ul className="space-y-3">
-                  <li><Link href="/solutions/cdm" className="flex items-center text-sm hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="link-cdm-solution">CDM Solution</Link></li>
-                  <li><Link href="/solutions/healthcare" className="flex items-center text-sm hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="link-healthcare-solution">Healthcare Kiosk Solution</Link></li>
-                  <li><Link href="/solutions/epp" className="flex items-center text-sm hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="link-epp-solution">EPP V4 V5 V6 Solution</Link></li>
-                  <li><Link href="/solutions/payment" className="flex items-center text-sm hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="link-payment-solution">Payment Kiosk Solution</Link></li>
+                  <li><Link href="/solutions/cdm" className="flex items-center text-sm hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="link-cdm-solution">{t('solutions.cdm')}</Link></li>
+                  <li><Link href="/solutions/healthcare" className="flex items-center text-sm hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="link-healthcare-solution">{t('solutions.healthcare')}</Link></li>
+                  <li><Link href="/solutions/epp" className="flex items-center text-sm hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="link-epp-solution">{t('solutions.epp')}</Link></li>
+                  <li><Link href="/solutions/payment" className="flex items-center text-sm hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="link-payment-solution">{t('solutions.payment')}</Link></li>
                 </ul>
               </div>
             </div>
@@ -122,10 +128,10 @@ export default function Header() {
               </button>
               <div className="dropdown-menu absolute top-full left-0 mt-2 w-48 bg-white shadow-2xl rounded-xl border border-gray-100 p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                 <ul className="space-y-3">
-                  <li><Link href="/about" className="text-sm hover:text-primary transition-colors block py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="link-about">Company</Link></li>
-                  <li><Link href="/about" className="text-sm hover:text-primary transition-colors block py-2 px-3 rounded-lg hover:bg-gray-50">Team</Link></li>
-                  <li><Link href="/about" className="text-sm hover:text-primary transition-colors block py-2 px-3 rounded-lg hover:bg-gray-50">Careers</Link></li>
-                  <li><Link href="/about" className="text-sm hover:text-primary transition-colors block py-2 px-3 rounded-lg hover:bg-gray-50">News</Link></li>
+                  <li><Link href="/about" className="text-sm hover:text-primary transition-colors block py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="link-about">{t('common.company')}</Link></li>
+                  <li><Link href="/about" className="text-sm hover:text-primary transition-colors block py-2 px-3 rounded-lg hover:bg-gray-50">{t('common.team')}</Link></li>
+                  <li><Link href="/about" className="text-sm hover:text-primary transition-colors block py-2 px-3 rounded-lg hover:bg-gray-50">{t('common.careers')}</Link></li>
+                  <li><Link href="/about" className="text-sm hover:text-primary transition-colors block py-2 px-3 rounded-lg hover:bg-gray-50">{t('common.news')}</Link></li>
                 </ul>
               </div>
             </div>
@@ -188,7 +194,10 @@ export default function Header() {
                     }`}
                   >
                     <span className="text-lg">{lang.flag}</span>
-                    <span>{lang.name}</span>
+                    <div className="flex flex-col">
+                      <span className="font-medium">{lang.name}</span>
+                      <span className="text-xs text-gray-500">{lang.country}</span>
+                    </div>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
