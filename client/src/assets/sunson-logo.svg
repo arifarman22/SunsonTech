@@ -1,0 +1,37 @@
+<svg width="120" height="48" viewBox="0 0 120 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#3B82F6" />
+      <stop offset="100%" stopColor="#1E40AF" />
+    </linearGradient>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stopColor="#1E40AF" />
+      <stop offset="100%" stopColor="#3B82F6" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Logo Symbol -->
+  <g transform="translate(2, 6)">
+    <!-- Outer Circle -->
+    <circle cx="18" cy="18" r="16" fill="url(#logoGradient)" stroke="#E5E7EB" strokeWidth="1"/>
+    
+    <!-- Inner S Shape -->
+    <path d="M12 10 C16 8, 20 10, 20 14 C20 16, 18 17, 16 17 L14 17 C12 17, 10 18, 10 20 C10 22, 12 24, 16 24 L20 24" 
+          stroke="white" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+    
+    <!-- Tech Circuit Pattern -->
+    <circle cx="24" cy="12" r="1.5" fill="white" opacity="0.7"/>
+    <circle cx="12" cy="24" r="1.5" fill="white" opacity="0.7"/>
+    <path d="M24 12 L26 10 M12 24 L10 26" stroke="white" strokeWidth="1" opacity="0.5"/>
+  </g>
+  
+  <!-- Company Name -->
+  <g transform="translate(42, 12)">
+    <text x="0" y="12" fontFamily="Inter, sans-serif" fontSize="16" fontWeight="700" fill="url(#textGradient)">
+      SUNSON
+    </text>
+    <text x="0" y="28" fontFamily="Inter, sans-serif" fontSize="8" fontWeight="500" fill="#6B7280" letterSpacing="1.5px">
+      TECHNOLOGY
+    </text>
+  </g>
+</svg>
