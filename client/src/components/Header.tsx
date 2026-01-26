@@ -1,278 +1,243 @@
 import { Link } from "wouter";
-import { ChevronDown, Menu, Globe, Search, Bell } from "lucide-react";
-import { useState } from "react";
-import { useLanguage, type Language } from "@/contexts/LanguageContext";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { ChevronDown, Menu, Search, Bell, Sparkles } from "lucide-react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import sunsonLogo from "@assets/sunson-logo.svg";
 import { motion, AnimatePresence } from "framer-motion";
 import InteractiveSearch from "@/components/InteractiveSearch";
 import NotificationCenter from "@/components/NotificationCenter";
-
-const languages = [
-  { code: 'en' as Language, name: 'English', country: 'United States', flag: '🇺🇸' },
-  { code: 'es' as Language, name: 'Español', country: 'Spain', flag: '🇪🇸' },
-  { code: 'fr' as Language, name: 'Français', country: 'France', flag: '🇫🇷' },
-  { code: 'de' as Language, name: 'Deutsch', country: 'Germany', flag: '🇩🇪' },
-  { code: 'zh' as Language, name: '中文', country: 'China', flag: '🇨🇳' },
-  { code: 'ja' as Language, name: '日本語', country: 'Japan', flag: '🇯🇵' },
-  { code: 'ko' as Language, name: '한국어', country: 'South Korea', flag: '🇰🇷' },
-  { code: 'ar' as Language, name: 'العربية', country: 'Saudi Arabia', flag: '🇸🇦' },
-  { code: 'pt' as Language, name: 'Português', country: 'Brazil', flag: '🇧🇷' },
-  { code: 'ru' as Language, name: 'Русский', country: 'Russia', flag: '🇷🇺' },
-  { code: 'it' as Language, name: 'Italiano', country: 'Italy', flag: '🇮🇹' },
-  { code: 'hi' as Language, name: 'हिन्दी', country: 'India', flag: '🇮🇳' },
-];
+import PremiumLanguageSelector from "@/components/PremiumLanguageSelector";
+import GoogleTranslate from "@/components/GoogleTranslate";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-  const { language, setLanguage, t } = useLanguage();
-  const currentLang = languages.find(lang => lang.code === language) || languages[0];
+  const [scrolled, setScrolled] = useState(false);
+  const { t } = useLanguage();
 
-  const unreadNotifications = 3; // Mock unread count
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const unreadNotifications = 3;
 
   return (
-    <motion.header 
-      className="bg-white shadow-lg sticky top-0 z-50 border-b border-gray-200"
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link href="/" data-testid="link-home">
-            <motion.div 
-              className="flex items-center cursor-pointer group"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <img 
-                src={sunsonLogo} 
-                alt="Sunson Technology Logo" 
-                className="h-12 w-auto transition-all duration-300"
-              />
-            </motion.div>
-          </Link>
-
-          {/* Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
-            <div className="dropdown relative group">
-              <button className="flex items-center text-foreground hover:text-primary transition-colors font-medium py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="button-products-dropdown">
-                {t('nav.products')} <ChevronDown className="ml-1 h-4 w-4 group-hover:rotate-180 transition-transform duration-200" />
-              </button>
-              <div className="dropdown-menu absolute top-full left-0 mt-2 w-80 bg-white shadow-2xl rounded-xl border border-gray-100 p-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="font-semibold text-sm text-primary mb-3 uppercase tracking-wide">{t('category.banking')}</h4>
-                    <ul className="space-y-2">
-                      <li><Link href="/products/banking" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50" data-testid="link-banking-products">{t('products.cdm')}</Link></li>
-                      <li><Link href="/products/banking" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.atm')}</Link></li>
-                      <li><Link href="/products/banking" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.stm')}</Link></li>
-                      <li><Link href="/products/banking" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.exchange')}</Link></li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-sm text-primary mb-3 uppercase tracking-wide">{t('category.healthcare')}</h4>
-                    <ul className="space-y-2">
-                      <li><Link href="/products/healthcare" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50" data-testid="link-healthcare-products">{t('products.checkin')}</Link></li>
-                      <li><Link href="/products/healthcare" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.healthcare')}</Link></li>
-                      <li><Link href="/products/healthcare" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.charging')}</Link></li>
-                      <li><Link href="/products/healthcare" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.hotel')}</Link></li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-sm text-primary mb-3 uppercase tracking-wide">{t('category.security')}</h4>
-                    <ul className="space-y-2">
-                      <li><Link href="/products/security" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50" data-testid="link-security-products">{t('products.epp')}</Link></li>
-                      <li><Link href="/products/security" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.keyboard')}</Link></li>
-                      <li><Link href="/products/security" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.pinpad')}</Link></li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-sm text-primary mb-3 uppercase tracking-wide">{t('category.payment')}</h4>
-                    <ul className="space-y-2">
-                      <li><Link href="/products/payment" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50" data-testid="link-payment-products">{t('products.bitcoin')}</Link></li>
-                      <li><Link href="/products/payment" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.cash')}</Link></li>
-                      <li><Link href="/products/payment" className="text-sm hover:text-primary transition-colors block py-1 rounded px-2 hover:bg-gray-50">{t('products.wall')}</Link></li>
-                    </ul>
-                  </div>
+    <>
+      <GoogleTranslate />
+      <motion.header
+        className={cn(
+          "fixed top-0 w-full z-50 transition-all duration-500",
+          scrolled
+            ? "glass-modern shadow-modern h-16"
+            : "bg-transparent h-20"
+        )}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <div className="container-modern h-full">
+          <div className="flex items-center justify-between h-full">
+            <Link href="/" data-testid="link-home">
+              <motion.div
+                className="flex items-center cursor-pointer group"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <div className="relative">
+                  <img
+                    src={sunsonLogo}
+                    alt="Sunson Technology Logo"
+                    className={cn(
+                      "transition-all duration-500",
+                      scrolled ? "h-8" : "h-12"
+                    )}
+                  />
+                  <div className="absolute -inset-2 bg-gradient-primary rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300 blur-xl" />
                 </div>
-              </div>
-            </div>
-
-            <div className="dropdown relative group">
-              <button className="flex items-center text-foreground hover:text-primary transition-colors font-medium py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="button-solutions-dropdown">
-                {t('nav.solutions')} <ChevronDown className="ml-1 h-4 w-4 group-hover:rotate-180 transition-transform duration-200" />
-              </button>
-              <div className="dropdown-menu absolute top-full left-0 mt-2 w-64 bg-white shadow-2xl rounded-xl border border-gray-100 p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <ul className="space-y-3">
-                  <li><Link href="/solutions/cdm" className="flex items-center text-sm hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="link-cdm-solution">{t('solutions.cdm')}</Link></li>
-                  <li><Link href="/solutions/healthcare" className="flex items-center text-sm hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="link-healthcare-solution">{t('solutions.healthcare')}</Link></li>
-                  <li><Link href="/solutions/epp" className="flex items-center text-sm hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="link-epp-solution">{t('solutions.epp')}</Link></li>
-                  <li><Link href="/solutions/payment" className="flex items-center text-sm hover:text-primary transition-colors py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="link-payment-solution">{t('solutions.payment')}</Link></li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="dropdown relative group">
-              <button className="flex items-center text-foreground hover:text-primary transition-colors font-medium py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="button-about-dropdown">
-                {t('nav.about')} <ChevronDown className="ml-1 h-4 w-4 group-hover:rotate-180 transition-transform duration-200" />
-              </button>
-              <div className="dropdown-menu absolute top-full left-0 mt-2 w-48 bg-white shadow-2xl rounded-xl border border-gray-100 p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <ul className="space-y-3">
-                  <li><Link href="/about" className="text-sm hover:text-primary transition-colors block py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="link-about">{t('common.company')}</Link></li>
-                  <li><Link href="/about" className="text-sm hover:text-primary transition-colors block py-2 px-3 rounded-lg hover:bg-gray-50">{t('common.team')}</Link></li>
-                  <li><Link href="/about" className="text-sm hover:text-primary transition-colors block py-2 px-3 rounded-lg hover:bg-gray-50">{t('common.careers')}</Link></li>
-                  <li><Link href="/about" className="text-sm hover:text-primary transition-colors block py-2 px-3 rounded-lg hover:bg-gray-50">{t('common.news')}</Link></li>
-                </ul>
-              </div>
-            </div>
-
-            <Link href="/contact" className="text-foreground hover:text-primary transition-colors font-medium py-2 px-3 rounded-lg hover:bg-gray-50" data-testid="link-contact">
-              {t('nav.contact')}
+                <span className="ml-3 text-xl font-bold text-gradient hidden sm:block">
+                  SunsonTech
+                </span>
+              </motion.div>
             </Link>
 
-            {/* Interactive Features */}
-            <div className="flex items-center space-x-2">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setIsSearchOpen(true)}
-                  className="relative"
-                >
-                  <Search className="h-4 w-4" />
-                </Button>
-              </motion.div>
-
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setIsNotificationOpen(true)}
-                  className="relative"
-                >
-                  <Bell className="h-4 w-4" />
-                  {unreadNotifications > 0 && (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center"
-                    >
-                      {unreadNotifications}
-                    </motion.div>
-                  )}
-                </Button>
-              </motion.div>
-            </div>
-
-            {/* Language Selector */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="flex items-center space-x-2 border-gray-200 hover:border-primary bg-white">
-                  <Globe className="h-4 w-4" />
-                  <span className="text-lg">{currentLang.flag}</span>
-                  <span className="hidden sm:inline">{currentLang.name}</span>
-                  <ChevronDown className="h-3 w-3" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 bg-white border-gray-100">
-                {languages.map((lang) => (
-                  <DropdownMenuItem
-                    key={lang.code}
-                    onClick={() => setLanguage(lang.code)}
-                    className={`flex items-center space-x-3 cursor-pointer hover:bg-gray-50 ${
-                      language === lang.code ? 'bg-gray-100' : ''
-                    }`}
-                  >
-                    <span className="text-lg">{lang.flag}</span>
-                    <div className="flex flex-col">
-                      <span className="font-medium">{lang.name}</span>
-                      <span className="text-xs text-gray-500">{lang.country}</span>
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-2">
+              <div className="relative group">
+                <button className="flex items-center text-gray-700 hover:text-emerald-500 transition-all font-semibold text-sm py-3 px-6 rounded-2xl hover:bg-emerald-50 group">
+                  <Sparkles className="mr-2 h-4 w-4 text-emerald-500" />
+                  {t('nav.products')}
+                  <ChevronDown className="ml-2 h-4 w-4 text-gray-400 group-hover:rotate-180 transition-transform duration-300" />
+                </button>
+                <div className="absolute top-full left-0 mt-4 w-[520px] glass-modern rounded-modern-lg border border-white/20 p-8 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-400 transform origin-top-left -translate-y-4 group-hover:translate-y-0 shadow-modern-xl">
+                  <div className="grid grid-cols-2 gap-8">
+                    <div>
+                      <h4 className="font-bold text-sm text-emerald-600 mb-6 uppercase tracking-wider flex items-center">
+                        <div className="w-2 h-2 bg-emerald-500 rounded-full mr-2" />
+                        Banking Solutions
+                      </h4>
+                      <ul className="space-y-2">
+                        <li><Link href="/products/banking" className="text-sm font-medium text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 transition-all block py-3 px-4 rounded-xl border border-transparent hover:border-emerald-100">Cash Deposit Machine CDM</Link></li>
+                        <li><Link href="/products/banking" className="text-sm font-medium text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 transition-all block py-3 px-4 rounded-xl border border-transparent hover:border-emerald-100">ATM Machine</Link></li>
+                        <li><Link href="/products/banking" className="text-sm font-medium text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 transition-all block py-3 px-4 rounded-xl border border-transparent hover:border-emerald-100">Smart Teller Machine STM</Link></li>
+                      </ul>
                     </div>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="lg:hidden"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            data-testid="button-mobile-menu"
-          >
-            <Menu className="h-6 w-6" />
-          </Button>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <motion.div 
-            className="lg:hidden py-4 border-t border-gray-200 bg-white"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <nav className="space-y-4">
-              <Link href="/products/banking" className="block text-foreground hover:text-primary py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors" data-testid="link-mobile-banking">Banking Products</Link>
-              <Link href="/products/healthcare" className="block text-foreground hover:text-primary py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors" data-testid="link-mobile-healthcare">Healthcare Products</Link>
-              <Link href="/products/security" className="block text-foreground hover:text-primary py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors" data-testid="link-mobile-security">Security Products</Link>
-              <Link href="/solutions/cdm" className="block text-foreground hover:text-primary py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors" data-testid="link-mobile-cdm">CDM Solution</Link>
-              <Link href="/about" className="block text-foreground hover:text-primary py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors" data-testid="link-mobile-about">{t('nav.about')}</Link>
-              <Link href="/contact" className="block text-foreground hover:text-primary py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors" data-testid="link-mobile-contact">{t('nav.contact')}</Link>
-              
-              {/* Mobile Language */}
-              <div className="pt-4 border-t border-gray-200 space-y-4">
-                <div>
-                  <div className="text-sm font-medium text-muted-foreground mb-2">{t('nav.language')}</div>
-                  <div className="grid grid-cols-2 gap-2">
-                    {languages.map((lang) => (
-                      <Button
-                        key={lang.code}
-                        variant={language === lang.code ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setLanguage(lang.code)}
-                        className="justify-start"
+                    <div>
+                      <h4 className="font-bold text-sm text-indigo-600 mb-6 uppercase tracking-wider flex items-center">
+                        <div className="w-2 h-2 bg-indigo-500 rounded-full mr-2" />
+                        Healthcare Kiosk
+                      </h4>
+                      <ul className="space-y-2">
+                        <li><Link href="/products/healthcare" className="text-sm font-medium text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all block py-3 px-4 rounded-xl border border-transparent hover:border-indigo-100">Hospital Check-in Kiosk</Link></li>
+                        <li><Link href="/products/healthcare" className="text-sm font-medium text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all block py-3 px-4 rounded-xl border border-transparent hover:border-indigo-100">Healthcare Kiosk</Link></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="mt-8 pt-6 border-t border-gray-100">
+                    <Link href="/products/banking" className="text-sm font-bold text-gradient hover:underline flex items-center justify-center group">
+                      Explore All Products
+                      <motion.span
+                        className="ml-2"
+                        animate={{ x: [0, 4, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
                       >
-                        <span className="mr-2">{lang.flag}</span>
-                        <span className="text-xs">{lang.name}</span>
-                      </Button>
-                    ))}
+                        →
+                      </motion.span>
+                    </Link>
                   </div>
                 </div>
               </div>
+
+              <div className="relative group">
+                <button className="flex items-center text-gray-700 hover:text-indigo-500 transition-all font-semibold text-sm py-3 px-6 rounded-2xl hover:bg-indigo-50 group">
+                  {t('nav.solutions')}
+                  <ChevronDown className="ml-2 h-4 w-4 text-gray-400 group-hover:rotate-180 transition-transform duration-300" />
+                </button>
+                <div className="absolute top-full left-0 mt-4 w-72 glass-modern rounded-modern-lg border border-white/20 p-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-400 transform origin-top-left -translate-y-4 group-hover:translate-y-0 shadow-modern-xl">
+                  <Link href="/solutions/cdm" className="flex items-center gap-4 text-sm font-medium text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 transition-all py-4 px-4 rounded-xl mb-2">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center text-white font-bold text-sm shadow-modern">
+                      CD
+                    </div>
+                    <div>
+                      <div className="font-semibold">CDM Solution</div>
+                      <div className="text-xs text-gray-500">Banking automation</div>
+                    </div>
+                  </Link>
+                  <Link href="/solutions/healthcare" className="flex items-center gap-4 text-sm font-medium text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all py-4 px-4 rounded-xl">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-secondary flex items-center justify-center text-white font-bold text-sm shadow-modern">
+                      HC
+                    </div>
+                    <div>
+                      <div className="font-semibold">Healthcare Solution</div>
+                      <div className="text-xs text-gray-500">Patient management</div>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+
+              <Link href="/about" className="text-gray-700 hover:text-purple-500 transition-all font-semibold text-sm py-3 px-6 rounded-2xl hover:bg-purple-50">
+                {t('nav.about')}
+              </Link>
+
+              <Link href="/contact" className="text-gray-700 hover:text-pink-500 transition-all font-semibold text-sm py-3 px-6 rounded-2xl hover:bg-pink-50">
+                {t('nav.contact')}
+              </Link>
+
+              <div className="h-8 w-px bg-gray-200 mx-4"></div>
+
+              <div className="flex items-center space-x-3">
+                <PremiumLanguageSelector />
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsSearchOpen(true)}
+                  className="rounded-2xl hover:bg-gray-100 hover:text-emerald-600 transition-all duration-300 h-10 w-10"
+                >
+                  <Search className="h-5 w-5" />
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsNotificationOpen(true)}
+                  className="relative rounded-2xl hover:bg-gray-100 hover:text-indigo-600 transition-all duration-300 h-10 w-10"
+                >
+                  <Bell className="h-5 w-5" />
+                  {unreadNotifications > 0 && (
+                    <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white pulse-glow-modern" />
+                  )}
+                </Button>
+
+                <Button className="btn-modern hidden xl:flex text-white font-semibold">
+                  {t('nav.getStarted')}
+                </Button>
+              </div>
             </nav>
-          </motion.div>
-        )}
-      </div>
-      
-      {/* Interactive Overlays */}
-      <AnimatePresence>
-        {isSearchOpen && (
-          <InteractiveSearch
-            isOpen={isSearchOpen}
-            onClose={() => setIsSearchOpen(false)}
-          />
-        )}
-        {isNotificationOpen && (
-          <NotificationCenter
-            isOpen={isNotificationOpen}
-            onClose={() => setIsNotificationOpen(false)}
-          />
-        )}
-      </AnimatePresence>
-    </motion.header>
+
+            <div className="flex lg:hidden items-center gap-3">
+              <PremiumLanguageSelector />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="rounded-2xl h-10 w-10"
+              >
+                <Menu className="h-6 w-6" />
+              </Button>
+            </div>
+          </div>
+
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.div
+                className="lg:hidden absolute top-full left-0 w-full glass-modern border-t border-white/20 p-8 overflow-y-auto max-h-[calc(100vh-80px)] shadow-modern-xl"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+              >
+                <nav className="flex flex-col space-y-4 font-semibold">
+                  <Link href="/products/banking" className="text-gray-900 hover:text-emerald-600 py-3 px-4 rounded-xl hover:bg-emerald-50 transition-all">{t('nav.products')}</Link>
+                  <Link href="/solutions/cdm" className="text-gray-900 hover:text-indigo-600 py-3 px-4 rounded-xl hover:bg-indigo-50 transition-all">{t('nav.solutions')}</Link>
+                  <Link href="/about" className="text-gray-900 hover:text-purple-600 py-3 px-4 rounded-xl hover:bg-purple-50 transition-all">{t('nav.about')}</Link>
+                  <Link href="/contact" className="text-gray-900 hover:text-pink-600 py-3 px-4 rounded-xl hover:bg-pink-50 transition-all">{t('nav.contact')}</Link>
+                  <div className="pt-6 border-t border-gray-100 flex flex-col gap-4">
+                    <Button className="btn-modern w-full text-white font-semibold">
+                      {t('nav.getStarted')}
+                    </Button>
+                  </div>
+                </nav>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        <AnimatePresence>
+          {isSearchOpen && (
+            <InteractiveSearch
+              isOpen={isSearchOpen}
+              onClose={() => setIsSearchOpen(false)}
+            />
+          )}
+          {isNotificationOpen && (
+            <NotificationCenter
+              isOpen={isNotificationOpen}
+              onClose={() => setIsNotificationOpen(false)}
+            />
+          )}
+        </AnimatePresence>
+      </motion.header>
+    </>
   );
+}
+
+// Helper for class names
+function cn(...classes: any[]) {
+  return classes.filter(Boolean).join(" ");
 }

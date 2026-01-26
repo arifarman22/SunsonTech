@@ -1,3 +1,4 @@
+import { Link, useLocation } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,6 +10,23 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { MapPin, Phone, Mail, Clock, Globe } from "lucide-react";
 
 export default function Contact() {
+  const [, setLocation] = useLocation();
+
+  const handleSubmitForm = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    alert('Thank you for your message! We will get back to you within 24 hours.');
+  };
+
+  const handleContactUs = () => {
+    // Scroll to contact form
+    document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleViewSolutions = () => {
+    setLocation('/products/banking');
+  };
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -113,7 +131,7 @@ export default function Contact() {
       </section>
 
       {/* Contact Form */}
-      <section className="py-20 bg-muted">
+      <section className="py-20 bg-muted" id="contact-form">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
@@ -129,103 +147,106 @@ export default function Contact() {
                 <CardDescription>Please provide as much detail as possible to help us assist you better</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="firstName">First Name *</Label>
-                    <Input id="firstName" placeholder="Enter your first name" data-testid="input-first-name" />
+                <form onSubmit={handleSubmitForm} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName">First Name *</Label>
+                      <Input id="firstName" placeholder="Enter your first name" required data-testid="input-first-name" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName">Last Name *</Label>
+                      <Input id="lastName" placeholder="Enter your last name" required data-testid="input-last-name" />
+                    </div>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="lastName">Last Name *</Label>
-                    <Input id="lastName" placeholder="Enter your last name" data-testid="input-last-name" />
-                  </div>
-                </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email Address *</Label>
-                    <Input id="email" type="email" placeholder="Enter your email address" data-testid="input-email" />
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email Address *</Label>
+                      <Input id="email" type="email" placeholder="Enter your email address" required data-testid="input-email" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Phone Number</Label>
+                      <Input id="phone" type="tel" placeholder="Enter your phone number" data-testid="input-phone" />
+                    </div>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input id="phone" type="tel" placeholder="Enter your phone number" data-testid="input-phone" />
-                  </div>
-                </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="company">Company Name</Label>
-                    <Input id="company" placeholder="Enter your company name" data-testid="input-company" />
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="company">Company Name</Label>
+                      <Input id="company" placeholder="Enter your company name" data-testid="input-company" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="country">Country</Label>
+                      <Select>
+                        <SelectTrigger data-testid="select-country">
+                          <SelectValue placeholder="Select your country" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="us">United States</SelectItem>
+                          <SelectItem value="ca">Canada</SelectItem>
+                          <SelectItem value="uk">United Kingdom</SelectItem>
+                          <SelectItem value="de">Germany</SelectItem>
+                          <SelectItem value="fr">France</SelectItem>
+                          <SelectItem value="au">Australia</SelectItem>
+                          <SelectItem value="jp">Japan</SelectItem>
+                          <SelectItem value="cn">China</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
+
                   <div className="space-y-2">
-                    <Label htmlFor="country">Country</Label>
+                    <Label htmlFor="interest">Area of Interest</Label>
                     <Select>
-                      <SelectTrigger data-testid="select-country">
-                        <SelectValue placeholder="Select your country" />
+                      <SelectTrigger data-testid="select-interest">
+                        <SelectValue placeholder="Select your area of interest" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="us">United States</SelectItem>
-                        <SelectItem value="ca">Canada</SelectItem>
-                        <SelectItem value="uk">United Kingdom</SelectItem>
-                        <SelectItem value="de">Germany</SelectItem>
-                        <SelectItem value="fr">France</SelectItem>
-                        <SelectItem value="au">Australia</SelectItem>
-                        <SelectItem value="jp">Japan</SelectItem>
-                        <SelectItem value="cn">China</SelectItem>
+                        <SelectItem value="banking">Banking Solutions</SelectItem>
+                        <SelectItem value="healthcare">Healthcare Solutions</SelectItem>
+                        <SelectItem value="security">Security Solutions</SelectItem>
+                        <SelectItem value="payment">Payment Solutions</SelectItem>
+                        <SelectItem value="transportation">Transportation Solutions</SelectItem>
+                        <SelectItem value="information">Information Solutions</SelectItem>
                         <SelectItem value="other">Other</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
-                </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="interest">Area of Interest</Label>
-                  <Select>
-                    <SelectTrigger data-testid="select-interest">
-                      <SelectValue placeholder="Select your area of interest" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="banking">Banking Solutions</SelectItem>
-                      <SelectItem value="healthcare">Healthcare Solutions</SelectItem>
-                      <SelectItem value="security">Security Solutions</SelectItem>
-                      <SelectItem value="payment">Payment Solutions</SelectItem>
-                      <SelectItem value="transportation">Transportation Solutions</SelectItem>
-                      <SelectItem value="information">Information Solutions</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message *</Label>
-                  <Textarea 
-                    id="message" 
-                    placeholder="Please describe your requirements, questions, or how we can help you..."
-                    className="min-h-32"
-                    data-testid="textarea-message"
-                  />
-                </div>
-
-                <div className="space-y-4">
-                  <div className="flex items-start space-x-2">
-                    <input type="checkbox" id="newsletter" className="mt-1" data-testid="checkbox-newsletter" />
-                    <Label htmlFor="newsletter" className="text-sm">
-                      I would like to receive updates about Sunson Technology products and services
-                    </Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="message">Message *</Label>
+                    <Textarea 
+                      id="message" 
+                      placeholder="Please describe your requirements, questions, or how we can help you..."
+                      className="min-h-32"
+                      required
+                      data-testid="textarea-message"
+                    />
                   </div>
-                  
-                  <div className="flex items-start space-x-2">
-                    <input type="checkbox" id="privacy" className="mt-1" data-testid="checkbox-privacy" />
-                    <Label htmlFor="privacy" className="text-sm">
-                      I agree to the Privacy Policy and Terms of Service *
-                    </Label>
-                  </div>
-                </div>
 
-                <div className="flex justify-center">
-                  <Button size="lg" className="px-12" data-testid="button-submit-form">
-                    Send Message
-                  </Button>
-                </div>
+                  <div className="space-y-4">
+                    <div className="flex items-start space-x-2">
+                      <input type="checkbox" id="newsletter" className="mt-1" data-testid="checkbox-newsletter" />
+                      <Label htmlFor="newsletter" className="text-sm">
+                        I would like to receive updates about Sunson Technology products and services
+                      </Label>
+                    </div>
+                    
+                    <div className="flex items-start space-x-2">
+                      <input type="checkbox" id="privacy" className="mt-1" required data-testid="checkbox-privacy" />
+                      <Label htmlFor="privacy" className="text-sm">
+                        I agree to the Privacy Policy and Terms of Service *
+                      </Label>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-center">
+                    <Button type="submit" size="lg" className="px-12" data-testid="button-submit-form">
+                      Send Message
+                    </Button>
+                  </div>
+                </form>
               </CardContent>
             </Card>
           </div>

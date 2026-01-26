@@ -110,7 +110,7 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({ isOpen, 
 
   return (
     <motion.div
-      className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50"
+      className="fixed inset-0 bg-black/20 backdrop-blur-sm z-[45]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

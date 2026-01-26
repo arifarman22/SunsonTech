@@ -1,67 +1,48 @@
 import { useState, useEffect, useCallback } from "react";
-import { ChevronLeft, ChevronRight, Play, Eye } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight, Sparkles, Zap, Shield } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
-import { FloatingElements } from "@/components/ui/floating-elements";
 
 const slides = [
   {
     id: 1,
-    title: ["BANKNOTE", "AND COIN", "DISPENSER", "ATM"],
-    highlight: "DISPENSER",
-    description: "Banknote and Coin Dispenser ATM System SKT-D1059A is specially designed for indoor or lobby scenarios where banknote and metal coin withdrawals are necessary.",
-    model: "SKT-D1059A",
-    background: "bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900",
-    textColor: "text-blue-100",
-    highlightColor: "text-blue-300",
-    buttonColor: "bg-blue-500 hover:bg-blue-600",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    category: "Banking Solutions"
+    title: "Next-Gen Banking",
+    subtitle: "Automation",
+    description: "Revolutionary Cash Deposit Machines and ATM solutions powered by AI and advanced security protocols. Experience the future of financial technology.",
+    image: "https://images.unsplash.com/photo-1551135049-8a33b5883817?q=80&w=1920&auto=format&fit=crop",
+    cta: "Explore Innovation",
+    link: "/products/banking",
+    gradient: "from-emerald-600 via-teal-600 to-cyan-600",
+    icon: Shield
   },
   {
     id: 2,
-    title: ["HEALTH", "SCREENING", "KIOSK"],
-    highlight: "SCREENING",
-    description: "Health Screening Kiosk SKT-D1007 is one of our patent products in the Medical industry. We design and development from hardware to software.",
-    model: "SKT-D1007",
-    background: "bg-gradient-to-br from-emerald-900 via-teal-800 to-green-900",
-    textColor: "text-emerald-100",
-    highlightColor: "text-emerald-300",
-    buttonColor: "bg-emerald-500 hover:bg-emerald-600",
-    image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    category: "Healthcare Solutions"
+    title: "Smart Healthcare",
+    subtitle: "Solutions",
+    description: "Transform patient experiences with intelligent kiosk systems. Streamline check-ins, reduce wait times, and enhance healthcare delivery efficiency.",
+    image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=1920&auto=format&fit=crop",
+    cta: "Discover More",
+    link: "/products/healthcare",
+    gradient: "from-indigo-600 via-purple-600 to-pink-600",
+    icon: Sparkles
   },
   {
     id: 3,
-    titleKey: "hero.innovation",
-    descriptionKey: "hero.innovationDesc",
-    background: "bg-gradient-to-br from-purple-900 via-indigo-800 to-blue-900",
-    textColor: "text-purple-100",
-    highlightColor: "text-purple-300",
-    isInnovation: true,
-    category: "Innovation"
+    title: "Future-Ready",
+    subtitle: "Technology",
+    description: "Leading the industry with cutting-edge automated terminal solutions. Custom hardware and software engineered for tomorrow's challenges.",
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=1920&auto=format&fit=crop",
+    cta: "Learn More",
+    link: "/about",
+    gradient: "from-violet-600 via-blue-600 to-indigo-600",
+    icon: Zap
   }
 ];
 
 export default function HeroCarousel() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30 });
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const { t } = useLanguage();
-
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
-
-  const scrollTo = useCallback((index: number) => {
-    if (emblaApi) emblaApi.scrollTo(index);
-  }, [emblaApi]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -70,493 +51,187 @@ export default function HeroCarousel() {
 
   useEffect(() => {
     if (!emblaApi) return;
-    onSelect();
     emblaApi.on('select', onSelect);
-    
-    // Auto-advance slides every 6 seconds
-    const interval = setInterval(() => {
-      emblaApi.scrollNext();
-    }, 6000);
-
-    return () => {
-      clearInterval(interval);
-      emblaApi.off('select', onSelect);
-    };
+    const interval = setInterval(() => emblaApi.scrollNext(), 10000);
+    return () => clearInterval(interval);
   }, [emblaApi, onSelect]);
 
   return (
-    <section className="relative h-screen bg-gray-900 overflow-hidden">
-      {/* Floating 3D Elements */}
-      <FloatingElements count={12} className="opacity-20" />
+    <section className="relative h-screen w-full overflow-hidden">
+      {/* Animated background mesh */}
+      <div className="absolute inset-0 gradient-mesh opacity-20" />
       
-      {/* Enhanced Background Pattern with 3D effect */}
-      <div className="absolute inset-0 opacity-10">
-        <motion.div 
-          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_50%)]"
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.1, 0.2, 0.1],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div 
-          className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.05)_25%,rgba(255,255,255,0.05)_50%,transparent_50%,transparent_75%,rgba(255,255,255,0.05)_75%)] bg-[length:20px_20px]"
-          animate={{
-            backgroundPosition: ["0px 0px", "20px 20px", "0px 0px"],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-      </div>
-
-      <div className="embla relative z-10" ref={emblaRef}>
-        <div className="embla__container flex h-screen">
-          <AnimatePresence mode="wait">
-            {slides.map((slide, index) => (
-              <motion.div 
-                key={slide.id} 
-                className={`embla__slide flex-none w-full ${slide.background} flex items-center relative overflow-hidden`}
-                initial={{ opacity: 0, scale: 1.1 }}
-                animate={{ 
-                  opacity: index === selectedIndex ? 1 : 0,
-                  scale: index === selectedIndex ? 1 : 1.1,
-                }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.8, ease: "easeInOut" }}
-              >
-                {/* Enhanced animated background elements */}
+      <div className="embla h-full" ref={emblaRef}>
+        <div className="embla__container h-full flex">
+          {slides.map((slide, index) => {
+            const IconComponent = slide.icon;
+            return (
+              <div key={slide.id} className="embla__slide relative flex-[0_0_100%] h-full">
+                {/* Background Image with enhanced overlay */}
                 <div className="absolute inset-0">
-                  <motion.div 
-                    className="absolute top-20 left-20 w-32 h-32 bg-white/5 rounded-full blur-xl"
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      x: [0, 50, 0],
-                      y: [0, -30, 0],
-                    }}
-                    transition={{
-                      duration: 6,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
+                  <img
+                    src={slide.image}
+                    alt={slide.title}
+                    className="w-full h-full object-cover scale-105"
                   />
-                  <motion.div 
-                    className="absolute bottom-20 right-20 w-48 h-48 bg-white/3 rounded-full blur-2xl"
-                    animate={{
-                      scale: [1.2, 1, 1.2],
-                      x: [0, -40, 0],
-                      y: [0, 20, 0],
-                    }}
-                    transition={{
-                      duration: 8,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 1,
-                    }}
-                  />
-                  <motion.div 
-                    className="absolute top-1/2 left-1/4 w-24 h-24 bg-white/4 rounded-full blur-lg"
-                    animate={{
-                      rotate: [0, 360],
-                      scale: [1, 1.3, 1],
-                    }}
-                    transition={{
-                      duration: 10,
-                      repeat: Infinity,
-                      ease: "linear",
-                      delay: 0.5,
-                    }}
-                  />
+                  <div className={`absolute inset-0 bg-gradient-to-br ${slide.gradient} opacity-80`} />
+                  <div className="absolute inset-0 bg-black/20" />
                 </div>
 
-                <div className="container mx-auto px-4 relative z-10">
-                  {slide.isInnovation ? (
-                    <motion.div 
-                      className="text-center"
-                      initial={{ opacity: 0, y: 50 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3, duration: 0.8 }}
-                    >
-                      <div className="max-w-5xl mx-auto space-y-8">
+                {/* Floating elements */}
+                <div className="absolute inset-0 overflow-hidden">
+                  {[...Array(6)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute w-2 h-2 bg-white/20 rounded-full"
+                      style={{
+                        left: `${20 + i * 15}%`,
+                        top: `${30 + i * 10}%`,
+                      }}
+                      animate={{
+                        y: [-20, 20, -20],
+                        opacity: [0.3, 0.8, 0.3],
+                      }}
+                      transition={{
+                        duration: 4 + i,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    />
+                  ))}
+                </div>
+
+                {/* Content */}
+                <div className="container-modern h-full flex items-center relative z-10">
+                  <div className="max-w-3xl">
+                    <AnimatePresence mode="wait">
+                      {index === selectedIndex && (
                         <motion.div
-                          initial={{ scale: 0.8, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          transition={{ delay: 0.1, duration: 0.6 }}
-                        >
-                          <Badge variant="outline" className="mb-6 text-white border-white/30 bg-white/10 backdrop-blur-sm">
-                            {slide.category}
-                          </Badge>
-                        </motion.div>
-                        <motion.h1 
-                          className="text-6xl lg:text-8xl font-bold text-white leading-tight"
-                          initial={{ opacity: 0, y: 30 }}
+                          initial={{ opacity: 0, y: 50 }}
                           animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.4, duration: 0.8 }}
-                        >
-                          <motion.span
-                            animate={{
-                              textShadow: [
-                                "0 0 20px rgba(255,255,255,0.5)",
-                                "0 0 40px rgba(255,255,255,0.8)",
-                                "0 0 20px rgba(255,255,255,0.5)",
-                              ],
-                            }}
-                            transition={{
-                              duration: 3,
-                              repeat: Infinity,
-                              ease: "easeInOut",
-                            }}
-                          >
-                            {t(slide.titleKey!)}
-                          </motion.span>
-                        </motion.h1>
-                        <motion.p 
-                          className={`text-2xl ${slide.textColor} max-w-3xl mx-auto leading-relaxed`}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.6, duration: 0.8 }}
-                        >
-                          {t(slide.descriptionKey!)}
-                        </motion.p>
-                        <motion.div 
-                          className="flex justify-center space-x-6 pt-8"
-                          initial={{ opacity: 0, y: 30 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.8, duration: 0.8 }}
-                        >
-                          <motion.div 
-                            className="group bg-white/10 backdrop-blur-md rounded-2xl p-8 hover:bg-white/20 transition-all duration-300 cursor-pointer border border-white/20 hover:border-white/40" 
-                            data-testid="button-watch-film"
-                            whileHover={{ 
-                              scale: 1.05, 
-                              y: -5,
-                              boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
-                            }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            <motion.div
-                              animate={{ rotate: [0, 360] }}
-                              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                            >
-                              <Play className="h-10 w-10 text-white mb-4 mx-auto" />
-                            </motion.div>
-                            <div className="text-white font-semibold text-lg">{t('hero.watchFilm')}</div>
-                            <div className="text-white/70 text-sm mt-1">2 min overview</div>
-                          </motion.div>
-                          <motion.div 
-                            className="group bg-white/10 backdrop-blur-md rounded-2xl p-8 hover:bg-white/20 transition-all duration-300 cursor-pointer border border-white/20 hover:border-white/40" 
-                            data-testid="button-vr-view"
-                            whileHover={{ 
-                              scale: 1.05, 
-                              y: -5,
-                              boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
-                            }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            <motion.div
-                              animate={{ 
-                                scale: [1, 1.1, 1],
-                                rotateY: [0, 180, 360],
-                              }}
-                              transition={{ 
-                                duration: 4, 
-                                repeat: Infinity, 
-                                ease: "easeInOut" 
-                              }}
-                            >
-                              <Eye className="h-10 w-10 text-white mb-4 mx-auto" />
-                            </motion.div>
-                            <div className="text-white font-semibold text-lg">{t('hero.vrView')}</div>
-                            <div className="text-white/70 text-sm mt-1">Interactive tour</div>
-                          </motion.div>
-                        </motion.div>
-                      </div>
-                    </motion.div>
-                  ) : (
-                    <div className="grid lg:grid-cols-2 gap-16 items-center">
-                      <motion.div 
-                        className="text-white space-y-8"
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.2, duration: 0.8 }}
-                      >
-                        <motion.div
-                          initial={{ scale: 0.8, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          transition={{ delay: 0.1, duration: 0.6 }}
-                        >
-                          <Badge variant="outline" className="mb-4 text-white border-white/30 bg-white/10 backdrop-blur-sm">
-                            {slide.category}
-                          </Badge>
-                        </motion.div>
-                        <motion.h1 
-                          className="text-5xl lg:text-7xl font-bold leading-tight"
-                          initial={{ opacity: 0, y: 30 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.3, duration: 0.8 }}
-                        >
-                          {slide.title!.map((line, lineIndex) => (
-                            <motion.span 
-                              key={lineIndex}
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: 0.4 + lineIndex * 0.1, duration: 0.6 }}
-                            >
-                              {line === slide.highlight ? (
-                                <motion.span 
-                                  className={slide.highlightColor}
-                                  animate={{
-                                    textShadow: [
-                                      "0 0 20px currentColor",
-                                      "0 0 40px currentColor",
-                                      "0 0 20px currentColor",
-                                    ],
-                                  }}
-                                  transition={{
-                                    duration: 2,
-                                    repeat: Infinity,
-                                    ease: "easeInOut",
-                                  }}
-                                >
-                                  {line}
-                                </motion.span>
-                              ) : (
-                                line
-                              )}
-                              {lineIndex < slide.title!.length - 1 && <br />}
-                            </motion.span>
-                          ))}
-                        </motion.h1>
-                        <motion.p 
-                          className={`text-xl ${slide.textColor} max-w-lg leading-relaxed`}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.6, duration: 0.8 }}
-                        >
-                          {slide.description}
-                        </motion.p>
-                        <motion.div 
-                          className="flex flex-col sm:flex-row gap-4 pt-4"
-                          initial={{ opacity: 0, y: 30 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.8, duration: 0.8 }}
+                          exit={{ opacity: 0, y: -50 }}
+                          transition={{ duration: 0.8, ease: "easeOut" }}
                         >
                           <motion.div
-                            whileHover={{ scale: 1.05, y: -2 }}
-                            whileTap={{ scale: 0.95 }}
+                            className="flex items-center gap-3 mb-6"
+                            initial={{ opacity: 0, x: -30 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.2, duration: 0.6 }}
                           >
-                            <Button size="lg" className={`${slide.buttonColor} text-white shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden group`} data-testid="button-learn-more">
-                              <motion.div
-                                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                                initial={{ x: '-100%' }}
-                                whileHover={{ x: '100%' }}
-                                transition={{ duration: 0.6 }}
-                              />
-                              <span className="relative z-10">{t('common.learnMore')}</span>
-                            </Button>
+                            <div className="p-3 rounded-2xl glass-modern">
+                              <IconComponent className="h-6 w-6 text-white" />
+                            </div>
+                            <span className="text-white/90 font-semibold tracking-[0.3em] uppercase text-sm">
+                              {slide.subtitle}
+                            </span>
                           </motion.div>
-                          <motion.div
-                            whileHover={{ scale: 1.05, y: -2 }}
-                            whileTap={{ scale: 0.95 }}
+                          
+                          <motion.h1 
+                            className="text-6xl md:text-8xl font-black text-white mb-8 leading-[0.9] text-shadow-modern"
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4, duration: 0.8 }}
                           >
-                            <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-gray-900 shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden group" data-testid="button-view-specs">
-                              <motion.div
-                                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-                                initial={{ x: '-100%' }}
-                                whileHover={{ x: '100%' }}
-                                transition={{ duration: 0.6 }}
-                              />
-                              <span className="relative z-10">{t('common.viewSpecs')}</span>
-                            </Button>
-                          </motion.div>
-                        </motion.div>
-                      </motion.div>
-                      {slide.image && (
-                        <motion.div 
-                          className="relative group"
-                          initial={{ opacity: 0, x: 50, rotateY: -15 }}
-                          animate={{ opacity: 1, x: 0, rotateY: 0 }}
-                          transition={{ delay: 0.4, duration: 0.8 }}
-                          style={{ transformStyle: "preserve-3d" }}
-                        >
+                            {slide.title}
+                          </motion.h1>
+                          
+                          <motion.p 
+                            className="text-xl md:text-2xl text-white/90 mb-12 leading-relaxed max-w-2xl font-light"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.6, duration: 0.8 }}
+                          >
+                            {slide.description}
+                          </motion.p>
+                          
                           <motion.div 
-                            className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-3xl blur-xl"
-                            animate={{
-                              scale: [1, 1.1, 1],
-                              opacity: [0.3, 0.6, 0.3],
-                            }}
-                            transition={{
-                              duration: 3,
-                              repeat: Infinity,
-                              ease: "easeInOut",
-                            }}
-                          />
-                          <motion.img 
-                            src={slide.image} 
-                            alt={slide.title!.join(" ")} 
-                            className="relative rounded-3xl shadow-2xl border border-white/20"
-                            whileHover={{ 
-                              scale: 1.05,
-                              rotateY: 5,
-                              rotateX: 5,
-                              boxShadow: "0 25px 50px rgba(0,0,0,0.5)",
-                            }}
-                            transition={{ duration: 0.3 }}
-                            style={{ transformStyle: "preserve-3d" }}
-                          />
-                          {slide.model && (
-                            <motion.div 
-                              className="absolute -bottom-6 -right-6 bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/20"
-                              initial={{ opacity: 0, scale: 0.8, rotateY: -20 }}
-                              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-                              transition={{ delay: 0.8, duration: 0.6 }}
-                              whileHover={{ 
-                                scale: 1.1,
-                                rotateY: 10,
-                                boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
-                              }}
-                              style={{ transformStyle: "preserve-3d" }}
+                            className="flex flex-wrap gap-6"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.8, duration: 0.8 }}
+                          >
+                            <Button 
+                              size="lg" 
+                              className="btn-modern text-lg px-10 py-6 h-auto font-bold group shadow-modern-xl"
                             >
-                              <div className="text-center">
-                                <motion.div 
-                                  className="text-3xl font-bold text-primary mb-1"
-                                  animate={{
-                                    color: ["hsl(221, 83%, 53%)", "hsl(221, 83%, 63%)", "hsl(221, 83%, 53%)"],
-                                  }}
-                                  transition={{
-                                    duration: 2,
-                                    repeat: Infinity,
-                                    ease: "easeInOut",
-                                  }}
-                                >
-                                  {slide.model}
-                                </motion.div>
-                                <div className="text-sm text-muted-foreground font-medium">Model Number</div>
-                              </div>
-                            </motion.div>
-                          )}
+                              {slide.cta}
+                              <ArrowRight className="ml-3 h-6 w-6 transition-transform group-hover:translate-x-2" />
+                            </Button>
+                            
+                            <Button 
+                              size="lg" 
+                              variant="outline" 
+                              className="text-lg px-10 py-6 h-auto font-bold glass-modern border-white/30 text-white hover:bg-white hover:text-gray-900 transition-all duration-300 shadow-modern"
+                            >
+                              View Portfolio
+                            </Button>
+                          </motion.div>
                         </motion.div>
                       )}
-                    </div>
-                  )}
+                    </AnimatePresence>
+                  </div>
                 </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+
+                {/* Decorative elements */}
+                <div className="absolute bottom-0 right-0 w-1/3 h-1/3 opacity-10">
+                  <div className="w-full h-full bg-gradient-to-tl from-white/20 to-transparent rounded-tl-[100px]" />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* Enhanced Navigation Dots with 3D effects */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-4 z-20">
-        {slides.map((_, index) => (
-          <motion.button
-            key={index}
-            className={`relative transition-all duration-300 ${
-              index === selectedIndex 
-                ? 'w-12 h-4 bg-white rounded-full' 
-                : 'w-4 h-4 bg-white/50 hover:bg-white/80 rounded-full'
-            }`}
-            onClick={() => scrollTo(index)}
-            data-testid={`button-carousel-dot-${index}`}
-            whileHover={{ scale: 1.2, y: -2 }}
-            whileTap={{ scale: 0.9 }}
-            animate={{
-              boxShadow: index === selectedIndex 
-                ? ["0 0 20px rgba(255,255,255,0.5)", "0 0 30px rgba(255,255,255,0.8)", "0 0 20px rgba(255,255,255,0.5)"]
-                : "0 0 0px rgba(255,255,255,0)",
-            }}
-            transition={{
-              boxShadow: {
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              },
-            }}
-          >
-            {index === selectedIndex && (
-              <motion.div 
-                className="absolute inset-0 bg-white rounded-full"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                exit={{ scale: 0 }}
-                transition={{ duration: 0.3 }}
+      {/* Enhanced Navigation Controls */}
+      <div className="absolute bottom-12 left-0 w-full z-20">
+        <div className="container-modern flex items-center justify-between">
+          {/* Progress Indicators */}
+          <div className="flex gap-4">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => emblaApi?.scrollTo(i)}
+                className={`h-2 transition-all duration-700 rounded-full backdrop-blur-sm ${
+                  i === selectedIndex 
+                    ? "w-16 bg-white shadow-modern" 
+                    : "w-8 bg-white/40 hover:bg-white/60"
+                }`}
               />
-            )}
-          </motion.button>
-        ))}
+            ))}
+          </div>
+
+          {/* Navigation Arrows */}
+          <div className="flex gap-4">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => emblaApi?.scrollPrev()}
+              className="rounded-2xl h-14 w-14 glass-modern border-white/30 text-white hover:bg-white hover:text-gray-900 transition-all duration-300 shadow-modern"
+            >
+              <ChevronLeft className="h-7 w-7" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => emblaApi?.scrollNext()}
+              className="rounded-2xl h-14 w-14 glass-modern border-white/30 text-white hover:bg-white hover:text-gray-900 transition-all duration-300 shadow-modern"
+            >
+              <ChevronRight className="h-7 w-7" />
+            </Button>
+          </div>
+        </div>
       </div>
 
-      {/* Enhanced Navigation Arrows with 3D effects */}
-      <motion.button
-        className="absolute left-8 top-1/2 transform -translate-y-1/2 text-white hover:text-white/80 transition-all duration-300 bg-white/10 backdrop-blur-md rounded-full p-4 hover:bg-white/20 border border-white/20 hover:border-white/40 z-20"
-        onClick={scrollPrev}
-        data-testid="button-carousel-prev"
-        whileHover={{ 
-          scale: 1.1, 
-          x: -5,
-          boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
-        }}
-        whileTap={{ scale: 0.9 }}
-        animate={{
-          x: [0, -2, 0],
-        }}
-        transition={{
-          x: {
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          },
-        }}
-      >
-        <ChevronLeft className="h-8 w-8" />
-      </motion.button>
-      <motion.button
-        className="absolute right-8 top-1/2 transform -translate-y-1/2 text-white hover:text-white/80 transition-all duration-300 bg-white/10 backdrop-blur-md rounded-full p-4 hover:bg-white/20 border border-white/20 hover:border-white/40 z-20"
-        onClick={scrollNext}
-        data-testid="button-carousel-next"
-        whileHover={{ 
-          scale: 1.1, 
-          x: 5,
-          boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
-        }}
-        whileTap={{ scale: 0.9 }}
-        animate={{
-          x: [0, 2, 0],
-        }}
-        transition={{
-          x: {
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          },
-        }}
-      >
-        <ChevronRight className="h-8 w-8" />
-      </motion.button>
-
-      {/* Enhanced progress indicator */}
+      {/* Scroll indicator */}
       <motion.div 
-        className="absolute bottom-20 right-8 text-white/70 text-sm font-medium z-20 bg-white/10 backdrop-blur-md rounded-lg px-3 py-2 border border-white/20"
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 1, duration: 0.5 }}
+        className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-white/60"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
       >
-        <motion.span
-          key={selectedIndex}
-          initial={{ scale: 1.2, color: "rgba(255,255,255,1)" }}
-          animate={{ scale: 1, color: "rgba(255,255,255,0.7)" }}
-          transition={{ duration: 0.3 }}
-        >
-          {selectedIndex + 1}
-        </motion.span>
-        {" / "}
-        {slides.length}
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-sm font-medium">Scroll to explore</span>
+          <div className="w-px h-8 bg-white/40" />
+        </div>
       </motion.div>
     </section>
   );

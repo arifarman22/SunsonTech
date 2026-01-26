@@ -1,9 +1,20 @@
+import { Link, useLocation } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, Target, Award, Globe } from "lucide-react";
 
 export default function About() {
+  const [, setLocation] = useLocation();
+
+  const handleContactUs = () => {
+    setLocation('/contact');
+  };
+
+  const handleViewSolutions = () => {
+    setLocation('/products/banking');
+  };
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -304,10 +315,18 @@ export default function About() {
             Contact us today to learn how Sunson Technology can help transform your business operations
           </p>
           <div className="flex justify-center space-x-4">
-            <button className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors" data-testid="button-contact-us">
+            <button 
+              onClick={handleContactUs}
+              className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors" 
+              data-testid="button-contact-us"
+            >
               Contact Us
             </button>
-            <button className="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-3 rounded-lg font-semibold transition-colors" data-testid="button-view-solutions">
+            <button 
+              onClick={handleViewSolutions}
+              className="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-3 rounded-lg font-semibold transition-colors" 
+              data-testid="button-view-solutions"
+            >
               View Solutions
             </button>
           </div>

@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -92,6 +92,12 @@ const bankingProducts = [
 ];
 
 export default function BankingProducts() {
+  const [, setLocation] = useLocation();
+
+  const handleContactQuote = (productId: string) => {
+    setLocation('/contact');
+  };
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -162,7 +168,12 @@ export default function BankingProducts() {
                         View Details
                       </Button>
                     </Link>
-                    <Button variant="outline" className="flex-1" data-testid={`button-contact-${product.id}`}>
+                    <Button 
+                      variant="outline" 
+                      className="flex-1" 
+                      onClick={() => handleContactQuote(product.id)}
+                      data-testid={`button-contact-${product.id}`}
+                    >
                       Contact for Quote
                     </Button>
                   </div>
