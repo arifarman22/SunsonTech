@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import GoogleTranslateInit from "@/components/GoogleTranslateInit";
 import Home from "@/pages/Home";
 import BankingProducts from "@/pages/products/BankingProducts";
 import HealthcareProducts from "@/pages/products/HealthcareProducts";
@@ -51,6 +52,7 @@ function App() {
         <LanguageProvider>
           <QueryClientProvider client={queryClient}>
             <TooltipProvider>
+              <GoogleTranslateInit />
               <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
                 <Toaster />
                 <Router />
