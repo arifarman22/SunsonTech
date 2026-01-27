@@ -24,13 +24,9 @@ export default function NavTranslateButton() {
   }, []);
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className="rounded-2xl hover:bg-gray-100 transition-all duration-300 h-10 w-10 relative"
-    >
+    <div className="flex items-center gap-2">
       <Languages className="h-5 w-5 text-gray-700" />
-      <div id="google_translate_nav" className="absolute opacity-0 inset-0 cursor-pointer" />
-    </Button>
+      <div id="google_translate_nav" />
+    </div>
   );
 }
