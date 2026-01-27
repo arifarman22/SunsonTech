@@ -13,28 +13,40 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script type="text/javascript">
       function googleTranslateElementInit() {
+        const checkAndInit = setInterval(function() {
+          const desktop = document.getElementById('google_translate_element');
+          const mobile = document.getElementById('google_translate_element_mobile');
+          
+          if (desktop || mobile) {
+            clearInterval(checkAndInit);
+            
+            if (desktop && !desktop.querySelector('.goog-te-gadget')) {
+              new google.translate.TranslateElement(
+                {
+                  pageLanguage: 'en',
+                  includedLanguages: 'en,bn,hi,ar,fr,es,de,zh-CN,ja,ko,ru,pt',
+                  layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+                },
+                'google_translate_element'
+              );
+            }
+            
+            if (mobile && !mobile.querySelector('.goog-te-gadget')) {
+              new google.translate.TranslateElement(
+                {
+                  pageLanguage: 'en',
+                  includedLanguages: 'en,bn,hi,ar,fr,es,de,zh-CN,ja,ko,ru,pt',
+                  layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+                },
+                'google_translate_element_mobile'
+              );
+            }
+          }
+        }, 100);
+        
         setTimeout(function() {
-          if (document.getElementById('google_translate_element')) {
-            new google.translate.TranslateElement(
-              {
-                pageLanguage: 'en',
-                includedLanguages: 'en,bn,hi,ar,fr,es,de,zh-CN,ja,ko,ru,pt',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-              },
-              'google_translate_element'
-            );
-          }
-          if (document.getElementById('google_translate_element_mobile')) {
-            new google.translate.TranslateElement(
-              {
-                pageLanguage: 'en',
-                includedLanguages: 'en,bn,hi,ar,fr,es,de,zh-CN,ja,ko,ru,pt',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-              },
-              'google_translate_element_mobile'
-            );
-          }
-        }, 1000);
+          clearInterval(checkAndInit);
+        }, 5000);
       }
     </script>
     <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
