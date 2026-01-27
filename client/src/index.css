@@ -306,40 +306,54 @@
 .goog-te-gadget {
   font-family: inherit !important;
   font-size: 0 !important;
+  color: transparent !important;
 }
 
 .goog-te-gadget-simple {
   background-color: white !important;
   border: 1px solid rgb(226 232 240) !important;
-  border-radius: 0.75rem !important;
-  padding: 0.5rem 1rem !important;
-  font-size: 0.875rem !important;
+  border-radius: 0.5rem !important;
+  padding: 0.375rem 0.75rem !important;
+  font-size: 0.813rem !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.5rem !important;
+  gap: 0.375rem !important;
   cursor: pointer !important;
   transition: all 0.2s ease !important;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+  min-width: 100px !important;
 }
 
 .goog-te-gadget-simple:hover {
-  border-color: rgb(59 130 246) !important;
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1) !important;
+  border-color: rgb(148 163 184) !important;
+  background-color: rgb(248 250 252) !important;
 }
 
 .goog-te-gadget-simple .goog-te-menu-value {
-  color: rgb(55 65 81) !important;
-  font-size: 0.875rem !important;
+  color: rgb(71 85 105) !important;
+  font-size: 0.813rem !important;
   font-weight: 500 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.375rem !important;
 }
 
 .goog-te-gadget-simple .goog-te-menu-value span {
-  color: rgb(55 65 81) !important;
-  font-size: 0.875rem !important;
+  color: rgb(71 85 105) !important;
+  font-size: 0.813rem !important;
 }
 
 .goog-te-gadget-simple .goog-te-menu-value span:first-child {
-  display: none !important;
+  display: inline !important;
+  font-size: 1rem !important;
+  line-height: 1 !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value span:last-child::before {
+  content: '▼' !important;
+  font-size: 0.625rem !important;
+  margin-left: 0.25rem !important;
+  color: rgb(148 163 184) !important;
 }
 
 .goog-te-gadget-icon {
@@ -354,25 +368,44 @@ body {
   top: 0 !important;
 }
 
-.goog-te-menu2 {
-  border-radius: 0.75rem !important;
+.goog-te-menu-frame {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
   border: 1px solid rgb(226 232 240) !important;
-  max-width: 300px !important;
+  border-radius: 0.5rem !important;
+  max-height: 400px !important;
+  overflow-y: auto !important;
+}
+
+.goog-te-menu2 {
+  border: none !important;
+  background: white !important;
+  max-width: 100% !important;
+  padding: 0.25rem !important;
 }
 
 .goog-te-menu2-item {
-  padding: 0.75rem 1rem !important;
-  font-size: 0.875rem !important;
-  transition: all 0.2s !important;
+  padding: 0.5rem 0.75rem !important;
+  font-size: 0.813rem !important;
+  transition: all 0.15s !important;
+  border-radius: 0.375rem !important;
+  margin: 0.125rem 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
 }
 
 .goog-te-menu2-item:hover {
-  background-color: rgb(239 246 255) !important;
+  background-color: rgb(241 245 249) !important;
 }
 
 .goog-te-menu2-item-selected {
-  background-color: rgb(219 234 254) !important;
+  background-color: rgb(226 232 240) !important;
+  font-weight: 500 !important;
+}
+
+.goog-te-menu2-item .text {
+  font-size: 0.813rem !important;
+  color: rgb(71 85 105) !important;
 }
 
 /* ===== Utility Classes ===== */
