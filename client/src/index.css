@@ -388,8 +388,26 @@
   display: none !important;
 }
 
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+iframe.goog-te-banner-frame {
+  display: none !important;
+}
+
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.skiptranslate {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  opacity: 0 !important;
+}
+
 body {
   top: 0 !important;
+  position: static !important;
 }
 
 .goog-te-menu-frame {
@@ -404,7 +422,7 @@ body {
 .goog-te-menu2 {
   border: none !important;
   background: white !important;
-  max-width: 240px !important;
+  max-width: 240 !important;
   padding: 0.25rem !important;
 }
 
