@@ -22,8 +22,9 @@ export default function GoogleTranslate() {
           if (spans[0]) spans[0].style.display = 'none';
           if (spans[1]) {
             spans[1].setAttribute('style', 'display: flex !important; align-items: center !important; gap: 0.375rem !important;');
-            if (!spans[1].textContent?.includes('🌐')) {
-              spans[1].textContent = '🌐 ' + spans[1].textContent + ' ▼';
+            const text = spans[1].textContent?.trim() || '';
+            if (text && !text.includes('🌐')) {
+              spans[1].textContent = 'English ▼';
             }
           }
         }
