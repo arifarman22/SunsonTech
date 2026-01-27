@@ -345,17 +345,11 @@
 }
 
 #google_translate_element .goog-te-gadget-simple .goog-te-menu-value span:last-child {
-  display: flex !important;
-  align-items: center !important;
-  gap: 0.25rem !important;
-  line-height: normal !important;
+  display: inline-block !important;
 }
 
 .goog-te-gadget {
   font-family: inherit !important;
-  font-size: 0 !important;
-  color: transparent !important;
-  line-height: 0 !important;
 }
 
 .goog-te-gadget-icon {
@@ -400,7 +394,7 @@ body {
 .goog-te-menu2 {
   border: none !important;
   background: white !important;
-  max-width: 240 !important;
+  max-width: 240px !important;
   padding: 0.25rem !important;
 }
 
