@@ -56,6 +56,7 @@ export default function PremiumLanguageSelector() {
 
     const handleLanguageChange = (langCode: string) => {
         setLanguage(langCode);
+        triggerGoogleTranslate(langCode);
         setIsOpen(false);
     };
 

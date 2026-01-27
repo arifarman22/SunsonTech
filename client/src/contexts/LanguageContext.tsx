@@ -33,6 +33,29 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     } else {
       document.documentElement.dir = 'ltr';
     }
+
+    // Trigger Google Translate
+    const triggerTranslation = () => {
+      const cookieValue = language === 'en' ? '' : `/en/${language}`;
+      document.cookie = `googtrans=${cookieValue}; path=/`;
+      
+      const selectElement = document.querySelector('.goog-te-combo') as HTMLSelectElement;
+      if (selectElement) {
+        selectElement.value = language;
+        selectElement.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    };
+
+    // Wait for Google Translate to load
+    const checkAndTranslate = setInterval(() => {
+      const selectElement = document.querySelector('.goog-te-combo');
+      if (selectElement) {
+        clearInterval(checkAndTranslate);
+        triggerTranslation();
+      }
+    }, 100);
+
+    setTimeout(() => clearInterval(checkAndTranslate), 5000);
   }, [language]);
 
   const t = (key: string): string => {
