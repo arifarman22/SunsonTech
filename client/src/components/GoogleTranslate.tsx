@@ -9,7 +9,7 @@ declare global {
 
 export default function GoogleTranslate() {
   useEffect(() => {
-    const styleOverride = setInterval(() => {
+    const updateLanguageDisplay = () => {
       const gadget = document.querySelector('.goog-te-gadget-simple');
       if (gadget) {
         const menuValue = gadget.querySelector('.goog-te-menu-value');
@@ -18,16 +18,27 @@ export default function GoogleTranslate() {
           if (spans[0]) spans[0].style.display = 'none';
           if (spans[1]) {
             const text = spans[1].textContent?.trim() || '';
-            if (text && !text.includes('EN')) {
-              spans[1].textContent = 'EN';
+            if (!text.includes('English')) {
+              spans[1].textContent = 'English';
             }
           }
         }
-        clearInterval(styleOverride);
       }
-    }, 100);
+    };
 
-    setTimeout(() => clearInterval(styleOverride), 5000);
+    const observer = new MutationObserver(updateLanguageDisplay);
+    const targetNode = document.getElementById('google_translate_element');
+    
+    if (targetNode) {
+      observer.observe(targetNode, { childList: true, subtree: true });
+    }
+
+    const interval = setInterval(updateLanguageDisplay, 500);
+
+    return () => {
+      observer.disconnect();
+      clearInterval(interval);
+    };
   }, []);
 
   return null;
