@@ -195,6 +195,9 @@ export default function Header() {
                 transition={{ duration: 0.4 }}
               >
                 <nav className="flex flex-col space-y-4 font-semibold">
+                  <div className="pb-4 border-b border-gray-100">
+                    <NavTranslateButton />
+                  </div>
                   <Link href="/products/banking" className="text-gray-900 hover:text-emerald-600 py-3 px-4 rounded-xl hover:bg-emerald-50 transition-all">Products</Link>
                   <Link href="/solutions/cdm" className="text-gray-900 hover:text-indigo-600 py-3 px-4 rounded-xl hover:bg-indigo-50 transition-all">Solutions</Link>
                   <Link href="/about" className="text-gray-900 hover:text-purple-600 py-3 px-4 rounded-xl hover:bg-purple-50 transition-all">About</Link>
