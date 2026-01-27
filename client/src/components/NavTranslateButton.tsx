@@ -1,6 +1,12 @@
 import { useEffect } from 'react';
 import { Languages } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+
+declare global {
+  interface Window {
+    googleTranslateElementInit: () => void;
+    google: any;
+  }
+}
 
 export default function NavTranslateButton() {
   useEffect(() => {

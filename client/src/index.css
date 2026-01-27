@@ -312,19 +312,21 @@ body {
 }
 
 #google_translate_nav {
-  display: inline-block !important;
+  display: block !important;
+  min-height: 40px !important;
 }
 
 #google_translate_nav .goog-te-gadget {
-  font-size: 0 !important;
+  font-size: 14px !important;
+  line-height: 1 !important;
 }
 
 #google_translate_nav .goog-te-gadget-simple {
-  background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
-  display: inline-flex !important;
-  align-items: center !important;
+  background: white !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  display: block !important;
 }
 
 #google_translate_nav .goog-te-gadget-simple .goog-te-menu-value {
@@ -347,13 +349,15 @@ body {
 }
 
 #google_translate_nav select.goog-te-combo {
+  display: block !important;
+  width: 100% !important;
   padding: 8px 12px !important;
   border-radius: 8px !important;
   border: 1px solid #e5e7eb !important;
   font-size: 14px !important;
   background: white !important;
   color: #374151 !important;
-  min-width: 200px !important;
+  min-width: 150px !important;
 }
 
 /* ===== Utility Classes ===== */
