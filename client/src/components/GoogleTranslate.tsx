@@ -5,6 +5,7 @@ declare global {
   interface Window {
     google: any;
     googleTranslateElementInit: () => void;
+    googleTranslateReady?: boolean;
   }
 }
 
@@ -12,21 +13,39 @@ export default function GoogleTranslate() {
   const [location] = useLocation();
 
   useEffect(() => {
-    // Reinitialize Google Translate widget on route change
-    const initWidget = () => {
-      if (window.google?.translate?.TranslateElement) {
-        const element = document.getElementById('google_translate_element');
-        if (element && !element.querySelector('.goog-te-gadget')) {
-          new window.google.translate.TranslateElement(
-            {
-              pageLanguage: 'en',
-              includedLanguages: 'en,bn,hi,ar,fr,es,de,zh-CN,ja,ko,ru,pt',
-              layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-              autoDisplay: false
-            },
-            'google_translate_element'
-          );
-        }
+    let cleanupInterval: NodeJS.Timeout;
+    let updateInterval: NodeJS.Timeout;
+    let observer: MutationObserver;
+
+    const initializeWidget = () => {
+      // Check if Google Translate API is available
+      if (!window.google?.translate?.TranslateElement) {
+        return false;
+      }
+
+      const element = document.getElementById('google_translate_element');
+      if (!element) {
+        return false;
+      }
+
+      // Clear any existing widget content
+      element.innerHTML = '';
+
+      try {
+        // Initialize the widget
+        new window.google.translate.TranslateElement(
+          {
+            pageLanguage: 'en',
+            includedLanguages: 'en,bn,hi,ar,fr,es,de,zh-CN,ja,ko,ru,pt',
+            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
+          },
+          'google_translate_element'
+        );
+        return true;
+      } catch (error) {
+        console.error('Failed to initialize Google Translate:', error);
+        return false;
       }
     };
 
@@ -47,32 +66,57 @@ export default function GoogleTranslate() {
       }
     };
 
-    // Wait for element to be available then initialize
-    const checkAndInit = setInterval(() => {
-      const element = document.getElementById('google_translate_element');
-      if (element) {
-        clearInterval(checkAndInit);
-        initWidget();
-      }
-    }, 100);
+    const setupWidget = () => {
+      // Wait for Google Translate script to be ready
+      const checkAndInit = () => {
+        if (window.googleTranslateReady || window.google?.translate?.TranslateElement) {
+          const initialized = initializeWidget();
+          
+          if (initialized) {
+            // Set up mutation observer to watch for widget changes
+            const targetNode = document.getElementById('google_translate_element');
+            if (targetNode) {
+              observer = new MutationObserver(updateLanguageDisplay);
+              observer.observe(targetNode, { childList: true, subtree: true });
+            }
 
-    setTimeout(() => clearInterval(checkAndInit), 3000);
+            // Periodically update language display
+            updateInterval = setInterval(updateLanguageDisplay, 500);
+            
+            if (cleanupInterval) {
+              clearInterval(cleanupInterval);
+            }
+          }
+        }
+      };
 
-    const observer = new MutationObserver(updateLanguageDisplay);
-    const targetNode = document.getElementById('google_translate_element');
-    
-    if (targetNode) {
-      observer.observe(targetNode, { childList: true, subtree: true });
-    }
+      // Try immediately
+      checkAndInit();
 
-    const interval = setInterval(updateLanguageDisplay, 500);
+      // If not ready, keep trying
+      cleanupInterval = setInterval(checkAndInit, 100);
 
-    return () => {
-      observer.disconnect();
-      clearInterval(interval);
-      clearInterval(checkAndInit);
+      // Stop trying after 10 seconds
+      setTimeout(() => {
+        if (cleanupInterval) {
+          clearInterval(cleanupInterval);
+        }
+      }, 10000);
+
+      // Listen for script load event
+      window.addEventListener('googleTranslateLoaded', checkAndInit);
     };
-  }, [location]);
+
+    setupWidget();
+
+    // Cleanup function
+    return () => {
+      if (cleanupInterval) clearInterval(cleanupInterval);
+      if (updateInterval) clearInterval(updateInterval);
+      if (observer) observer.disconnect();
+      window.removeEventListener('googleTranslateLoaded', setupWidget);
+    };
+  }, [location]); // Re-run when location changes
 
   return null;
 }
