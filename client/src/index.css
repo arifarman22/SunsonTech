@@ -311,39 +311,9 @@ body {
   display: none !important;
 }
 
-#google_translate_nav {
-  display: inline-block !important;
-}
-
-#google_translate_nav .goog-te-gadget {
-  font-size: 0 !important;
-}
-
-#google_translate_nav .goog-te-gadget-simple {
-  background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-}
-
-#google_translate_nav .goog-te-gadget-simple .goog-te-menu-value {
-  color: #374151 !important;
-  font-size: 14px !important;
-  font-weight: 500 !important;
-}
-
-#google_translate_nav .goog-te-gadget-simple .goog-te-menu-value span {
-  color: #374151 !important;
-  border-left: none !important;
-}
-
-#google_translate_nav .goog-te-gadget-icon {
-  display: none !important;
-}
-
-#google_translate_nav .goog-te-gadget-simple img {
-  display: none !important;
+#google_translate_hidden {
+  position: absolute;
+  left: -9999px;
 }
 
 /* ===== Utility Classes ===== */

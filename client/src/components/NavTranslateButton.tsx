@@ -57,11 +57,13 @@ export default function NavTranslateButton() {
     setSelectedLang(lang);
     setIsOpen(false);
     
-    const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
-    if (select) {
-      select.value = lang.code;
-      select.dispatchEvent(new Event('change'));
-    }
+    setTimeout(() => {
+      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
+      if (select) {
+        select.value = lang.code;
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    }, 100);
   };
 
   return (
