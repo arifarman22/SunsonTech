@@ -1,4 +1,3 @@
-// Client-side Google Translate widget
 declare global {
   interface Window {
     googleTranslateElementInit: () => void;
@@ -6,14 +5,17 @@ declare global {
   }
 }
 
+let isInitialized = false;
+
 export function initGoogleTranslate() {
+  if (isInitialized) return;
+  
   window.googleTranslateElementInit = () => {
     new window.google.translate.TranslateElement(
       {
         pageLanguage: 'en',
         includedLanguages: 'en,bn,hi,ar,fr,es,de,zh-CN,ja,ko,ru,pt',
-        layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-        autoDisplay: false
+        layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
       },
       'google_translate_element'
     );
@@ -21,14 +23,19 @@ export function initGoogleTranslate() {
 
   const script = document.createElement('script');
   script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-  script.async = true;
   document.head.appendChild(script);
+  isInitialized = true;
 }
 
 export function changeLanguage(langCode: string) {
-  const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
-  if (select) {
-    select.value = langCode;
-    select.dispatchEvent(new Event('change'));
-  }
+  const waitForSelect = setInterval(() => {
+    const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
+    if (select) {
+      clearInterval(waitForSelect);
+      select.value = langCode;
+      select.dispatchEvent(new Event('change'));
+    }
+  }, 100);
+  
+  setTimeout(() => clearInterval(waitForSelect), 5000);
 }
