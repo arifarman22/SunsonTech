@@ -1,10 +1,17 @@
 import { useEffect } from 'react';
-import { initGoogleTranslate } from '@/lib/translationService';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { initGoogleTranslate, changeLanguage } from '@/lib/translationService';
 
 export default function AutoTranslate() {
+  const { language } = useLanguage();
+
   useEffect(() => {
     initGoogleTranslate();
   }, []);
 
-  return null;
+  useEffect(() => {
+    changeLanguage(language);
+  }, [language]);
+
+  return <div id="google_translate_element" style={{ display: 'none' }} />;
 }

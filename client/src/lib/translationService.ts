@@ -26,3 +26,16 @@ export function initGoogleTranslate() {
   document.head.appendChild(script);
   isInitialized = true;
 }
+
+export function changeLanguage(langCode: string) {
+  const waitForSelect = setInterval(() => {
+    const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
+    if (select) {
+      clearInterval(waitForSelect);
+      select.value = langCode;
+      select.dispatchEvent(new Event('change'));
+    }
+  }, 100);
+  
+  setTimeout(() => clearInterval(waitForSelect), 5000);
+}
