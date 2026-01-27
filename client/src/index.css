@@ -298,30 +298,52 @@
 }
 
 /* ===== Google Translate Widget Styling ===== */
-#google_translate_element {
+#google_translate_element,
+#google_translate_element_mobile {
   display: inline-block;
 }
 
-#google_translate_element select {
-  background: white;
-  border: 1px solid rgb(226 232 240);
-  border-radius: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
-  color: rgb(55 65 81);
-  cursor: pointer;
-  transition: all 0.2s;
+.goog-te-gadget {
+  font-family: inherit !important;
+  font-size: 0 !important;
 }
 
-#google_translate_element select:hover {
-  border-color: rgb(59 130 246);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+.goog-te-gadget-simple {
+  background-color: white !important;
+  border: 1px solid rgb(226 232 240) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.875rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
 }
 
-#google_translate_element select:focus {
-  outline: none;
-  border-color: rgb(59 130 246);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+.goog-te-gadget-simple:hover {
+  border-color: rgb(59 130 246) !important;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1) !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value {
+  color: rgb(55 65 81) !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value span {
+  color: rgb(55 65 81) !important;
+  font-size: 0.875rem !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value span:first-child {
+  display: none !important;
+}
+
+.goog-te-gadget-icon {
+  display: none !important;
 }
 
 .goog-te-banner-frame {
@@ -332,22 +354,25 @@ body {
   top: 0 !important;
 }
 
-.goog-te-gadget {
-  font-family: inherit !important;
+.goog-te-menu2 {
+  border-radius: 0.75rem !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid rgb(226 232 240) !important;
+  max-width: 300px !important;
 }
 
-.goog-te-gadget-simple {
-  background-color: transparent !important;
-  border: none !important;
-  padding: 0 !important;
+.goog-te-menu2-item {
+  padding: 0.75rem 1rem !important;
+  font-size: 0.875rem !important;
+  transition: all 0.2s !important;
 }
 
-.goog-te-menu-value {
-  color: rgb(55 65 81) !important;
+.goog-te-menu2-item:hover {
+  background-color: rgb(239 246 255) !important;
 }
 
-.goog-te-menu-value:hover {
-  color: rgb(59 130 246) !important;
+.goog-te-menu2-item-selected {
+  background-color: rgb(219 234 254) !important;
 }
 
 /* ===== Utility Classes ===== */
