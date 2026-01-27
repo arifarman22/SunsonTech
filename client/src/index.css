@@ -314,10 +314,11 @@ body {
 #google_translate_nav {
   display: block !important;
   min-height: 40px !important;
+  max-width: 120px !important;
 }
 
 #google_translate_nav .goog-te-gadget {
-  font-size: 14px !important;
+  font-size: 13px !important;
   line-height: 1 !important;
 }
 
@@ -325,19 +326,25 @@ body {
   background: white !important;
   border: 1px solid #e5e7eb !important;
   border-radius: 8px !important;
-  padding: 8px 12px !important;
+  padding: 6px 8px !important;
   display: block !important;
+  white-space: nowrap !important;
+  max-width: 120px !important;
 }
 
 #google_translate_nav .goog-te-gadget-simple .goog-te-menu-value {
   color: #374151 !important;
-  font-size: 14px !important;
+  font-size: 0 !important;
   font-weight: 500 !important;
 }
 
+#google_translate_nav .goog-te-gadget-simple .goog-te-menu-value::before {
+  content: 'Select' !important;
+  font-size: 13px !important;
+}
+
 #google_translate_nav .goog-te-gadget-simple .goog-te-menu-value span {
-  color: #374151 !important;
-  border-left: none !important;
+  display: none !important;
 }
 
 #google_translate_nav .goog-te-gadget-icon {
@@ -351,7 +358,7 @@ body {
 #google_translate_nav select.goog-te-combo {
   display: block !important;
   width: auto !important;
-  max-width: 150px !important;
+  max-width: 120px !important;
   padding: 6px 8px !important;
   border-radius: 8px !important;
   border: 1px solid #e5e7eb !important;
