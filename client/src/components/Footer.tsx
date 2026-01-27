@@ -2,11 +2,11 @@ import { Link } from "wouter";
 import { Mail, Phone, MapPin, Linkedin, Twitter, Youtube, ArrowRight, Sparkles, Globe } from "lucide-react";
 import sunsonLogo from "@assets/sunson-logo.svg";
 import { motion } from "framer-motion";
-import { useLanguage } from "@/contexts/LanguageContext";
+
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const { t } = useLanguage();
+
 
   return (
     <footer className="relative bg-gradient-to-br from-gray-900 via-slate-900 to-black text-white overflow-hidden">

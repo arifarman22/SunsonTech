@@ -6,15 +6,12 @@ import sunsonLogo from "@assets/sunson-logo.svg";
 import { motion, AnimatePresence } from "framer-motion";
 import InteractiveSearch from "@/components/InteractiveSearch";
 import NotificationCenter from "@/components/NotificationCenter";
-import LanguageSelector from "@/components/LanguageSelector";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,7 +63,7 @@ export default function Header() {
               <div className="relative group">
                 <button className="flex items-center text-gray-700 hover:text-emerald-500 transition-all font-semibold text-sm py-3 px-6 rounded-2xl hover:bg-emerald-50 group">
                   <Sparkles className="mr-2 h-4 w-4 text-emerald-500" />
-                  {t('nav.products')}
+                  Products
                   <ChevronDown className="ml-2 h-4 w-4 text-gray-400 group-hover:rotate-180 transition-transform duration-300" />
                 </button>
                 <div className="absolute top-full left-0 mt-4 w-[520px] glass-modern rounded-modern-lg border border-white/20 p-8 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-400 transform origin-top-left -translate-y-4 group-hover:translate-y-0 shadow-modern-xl">
@@ -110,7 +107,7 @@ export default function Header() {
 
               <div className="relative group">
                 <button className="flex items-center text-gray-700 hover:text-indigo-500 transition-all font-semibold text-sm py-3 px-6 rounded-2xl hover:bg-indigo-50 group">
-                  {t('nav.solutions')}
+                  Solutions
                   <ChevronDown className="ml-2 h-4 w-4 text-gray-400 group-hover:rotate-180 transition-transform duration-300" />
                 </button>
                 <div className="absolute top-full left-0 mt-4 w-72 glass-modern rounded-modern-lg border border-white/20 p-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-400 transform origin-top-left -translate-y-4 group-hover:translate-y-0 shadow-modern-xl">
@@ -136,17 +133,16 @@ export default function Header() {
               </div>
 
               <Link href="/about" className="text-gray-700 hover:text-purple-500 transition-all font-semibold text-sm py-3 px-6 rounded-2xl hover:bg-purple-50">
-                {t('nav.about')}
+                About
               </Link>
 
               <Link href="/contact" className="text-gray-700 hover:text-pink-500 transition-all font-semibold text-sm py-3 px-6 rounded-2xl hover:bg-pink-50">
-                {t('nav.contact')}
+                Contact
               </Link>
 
               <div className="h-8 w-px bg-gray-200 mx-4"></div>
 
               <div className="flex items-center space-x-3">
-                <LanguageSelector />
                 
                 <Button
                   variant="ghost"
@@ -170,7 +166,7 @@ export default function Header() {
                 </Button>
 
                 <Button className="btn-modern hidden xl:flex text-white font-semibold">
-                  {t('nav.getStarted')}
+                  Get Started
                 </Button>
               </div>
             </nav>
@@ -197,16 +193,13 @@ export default function Header() {
                 transition={{ duration: 0.4 }}
               >
                 <nav className="flex flex-col space-y-4 font-semibold">
-                  <div className="pb-4 border-b border-gray-100">
-                    <LanguageSelector />
-                  </div>
-                  <Link href="/products/banking" className="text-gray-900 hover:text-emerald-600 py-3 px-4 rounded-xl hover:bg-emerald-50 transition-all">{t('nav.products')}</Link>
-                  <Link href="/solutions/cdm" className="text-gray-900 hover:text-indigo-600 py-3 px-4 rounded-xl hover:bg-indigo-50 transition-all">{t('nav.solutions')}</Link>
-                  <Link href="/about" className="text-gray-900 hover:text-purple-600 py-3 px-4 rounded-xl hover:bg-purple-50 transition-all">{t('nav.about')}</Link>
-                  <Link href="/contact" className="text-gray-900 hover:text-pink-600 py-3 px-4 rounded-xl hover:bg-pink-50 transition-all">{t('nav.contact')}</Link>
+                  <Link href="/products/banking" className="text-gray-900 hover:text-emerald-600 py-3 px-4 rounded-xl hover:bg-emerald-50 transition-all">Products</Link>
+                  <Link href="/solutions/cdm" className="text-gray-900 hover:text-indigo-600 py-3 px-4 rounded-xl hover:bg-indigo-50 transition-all">Solutions</Link>
+                  <Link href="/about" className="text-gray-900 hover:text-purple-600 py-3 px-4 rounded-xl hover:bg-purple-50 transition-all">About</Link>
+                  <Link href="/contact" className="text-gray-900 hover:text-pink-600 py-3 px-4 rounded-xl hover:bg-pink-50 transition-all">Contact</Link>
                   <div className="pt-6 border-t border-gray-100 flex flex-col gap-4">
                     <Button className="btn-modern w-full text-white font-semibold">
-                      {t('nav.getStarted')}
+                      Get Started
                     </Button>
                   </div>
                 </nav>
