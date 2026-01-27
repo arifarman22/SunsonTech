@@ -20,23 +20,7 @@ const languages = [
 export default function LanguageSelector() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState(languages[0]);
-  const [isReady, setIsReady] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Check if Google Translate is ready
-    const checkReady = setInterval(() => {
-      const select = document.querySelector('select.goog-te-combo') as HTMLSelectElement;
-      if (select) {
-        setIsReady(true);
-        clearInterval(checkReady);
-      }
-    }, 100);
-
-    setTimeout(() => clearInterval(checkReady), 10000);
-
-    return () => clearInterval(checkReady);
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -53,21 +37,14 @@ export default function LanguageSelector() {
     setSelectedLang(lang);
     setIsOpen(false);
     
-    // Trigger Google Translate
-    const select = document.querySelector('select.goog-te-combo') as HTMLSelectElement;
-    if (select) {
-      select.value = lang.code;
-      select.dispatchEvent(new Event('change', { bubbles: true }));
-      
-      // Force trigger if first attempt doesn't work
-      setTimeout(() => {
-        if (select.value !== lang.code) {
-          select.value = lang.code;
-          const event = new Event('change', { bubbles: true });
-          select.dispatchEvent(event);
-        }
-      }, 100);
-    }
+    // Try to trigger Google Translate
+    setTimeout(() => {
+      const select = document.querySelector('select.goog-te-combo') as HTMLSelectElement;
+      if (select) {
+        select.value = lang.code;
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    }, 50);
   };
 
   return (
@@ -81,7 +58,6 @@ export default function LanguageSelector() {
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white border border-gray-200 hover:border-gray-300 transition-all duration-200 shadow-sm hover:shadow-md"
           aria-label="Select language"
-          disabled={!isReady}
         >
           <Globe className="h-4 w-4 text-gray-600" />
           <span className="text-sm font-medium text-gray-700 hidden sm:inline">
@@ -100,7 +76,7 @@ export default function LanguageSelector() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50 max-h-96 overflow-y-auto"
+              className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-[100] max-h-96 overflow-y-auto"
             >
               {languages.map((lang) => (
                 <button
