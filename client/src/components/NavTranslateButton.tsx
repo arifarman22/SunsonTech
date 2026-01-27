@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Languages } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function NavTranslateButton() {
   useEffect(() => {
@@ -9,7 +10,8 @@ export default function NavTranslateButton() {
           {
             pageLanguage: 'en',
             includedLanguages: 'en,bn,hi,ar,fr,es,de,zh-CN,ja,ko,ru,pt',
-            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
+            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
           },
           'google_translate_nav'
         );
@@ -22,9 +24,13 @@ export default function NavTranslateButton() {
   }, []);
 
   return (
-    <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white border border-gray-200 hover:border-emerald-300 transition-all duration-200 shadow-sm hover:shadow-md">
-      <Languages className="h-4 w-4 text-emerald-600" />
-      <div id="google_translate_nav" />
-    </div>
+    <Button
+      variant="ghost"
+      size="icon"
+      className="rounded-2xl hover:bg-gray-100 transition-all duration-300 h-10 w-10 relative"
+    >
+      <Languages className="h-5 w-5 text-gray-700" />
+      <div id="google_translate_nav" className="absolute opacity-0 inset-0 cursor-pointer" />
+    </Button>
   );
 }
