@@ -13,15 +13,13 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function ProductCategories() {
-  const { t } = useLanguage();
   
   const categories = [
   {
     id: "banking",
-    title: t('products.banking'),
+    title: "Banking Solutions",
     desc: "Revolutionary self-service solutions transforming financial institutions worldwide.",
     icon: Building2,
     link: "/products/banking",
@@ -31,7 +29,7 @@ export default function ProductCategories() {
   },
   {
     id: "healthcare",
-    title: t('products.healthcare'),
+    title: "Healthcare Kiosks",
     desc: "Intelligent patient management systems enhancing healthcare delivery.",
     icon: Heart,
     link: "/products/healthcare",
@@ -41,7 +39,7 @@ export default function ProductCategories() {
   },
   {
     id: "security",
-    title: t('products.security'),
+    title: "Security Systems",
     desc: "Military-grade security solutions with advanced encryption protocols.",
     icon: Shield,
     link: "/products/security",
@@ -51,7 +49,7 @@ export default function ProductCategories() {
   },
   {
     id: "transportation",
-    title: t('products.transportation'),
+    title: "Transportation",
     desc: "Automated fare collection and ticketing systems for modern transit.",
     icon: Train,
     link: "/products/transportation",
@@ -61,7 +59,7 @@ export default function ProductCategories() {
   },
   {
     id: "information",
-    title: t('products.information'),
+    title: "Information Kiosks",
     desc: "Interactive information systems creating seamless user experiences.",
     icon: Info,
     link: "/products/information",
@@ -71,7 +69,7 @@ export default function ProductCategories() {
   },
   {
     id: "payment",
-    title: t('products.payment'),
+    title: "Payment Terminals",
     desc: "Next-generation payment terminals supporting all modern currencies.",
     icon: CreditCard,
     link: "/products/payment",
@@ -97,10 +95,10 @@ export default function ProductCategories() {
               </span>
             </div>
             <h2 className="text-5xl md:text-7xl font-black text-gradient mb-8 leading-tight">
-              {t('hero.title')}
+              Innovative Product Categories
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              {t('hero.subtitle')}
+              Cutting-edge self-service solutions across multiple industries
             </p>
           </motion.div>
         </div>
@@ -154,7 +152,7 @@ export default function ProductCategories() {
                     
                     <Link href={category.link}>
                       <Button className="w-full btn-modern group/btn">
-                        <span className="relative z-10">{t('common.viewDetails')}</span>
+                        <span className="relative z-10">View Details</span>
                         <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover/btn:translate-x-1 relative z-10" />
                       </Button>
                     </Link>
@@ -175,7 +173,7 @@ export default function ProductCategories() {
         >
           <Link href="/products/banking">
             <Button size="lg" variant="outline" className="px-12 py-6 text-lg font-bold rounded-2xl border-2 border-gray-200 hover:border-emerald-500 hover:text-emerald-600 transition-all duration-300 group">
-              {t('common.exploreAll')}
+              Explore All Products
               <ArrowRight className="ml-3 h-6 w-6 transition-transform group-hover:translate-x-2" />
             </Button>
           </Link>
