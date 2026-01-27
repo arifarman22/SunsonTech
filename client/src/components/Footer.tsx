@@ -41,7 +41,7 @@ export default function Footer() {
             
             <div className="flex items-center gap-2 text-emerald-400">
               <Globe className="h-5 w-5" />
-              <span className="font-semibold">{t('footer.serving')}</span>
+              <span className="font-semibold">Serving 50+ Countries Worldwide</span>
             </div>
             
             <div className="flex gap-4">
@@ -74,7 +74,7 @@ export default function Footer() {
           >
             <h4 className="text-white font-bold uppercase tracking-[0.3em] text-sm mb-8 flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-emerald-500" />
-              {t('footer.solutions')}
+              Solutions
             </h4>
             <ul className="space-y-4">
               {[
@@ -107,7 +107,7 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h4 className="text-white font-bold uppercase tracking-[0.3em] text-sm mb-8">{t('footer.company')}</h4>
+            <h4 className="text-white font-bold uppercase tracking-[0.3em] text-sm mb-8">Company</h4>
             <ul className="space-y-4">
               {[
                 { name: "About Innovation", href: "/about" },
