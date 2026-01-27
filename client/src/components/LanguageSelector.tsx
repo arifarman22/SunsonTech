@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Globe, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const languages = [
   { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -19,8 +20,10 @@ const languages = [
 
 export default function LanguageSelector() {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLang, setSelectedLang] = useState(languages[0]);
+  const { language, setLanguage } = useLanguage();
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const selectedLang = languages.find(l => l.code === language) || languages[0];
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -34,93 +37,56 @@ export default function LanguageSelector() {
   }, []);
 
   const handleLanguageChange = (lang: typeof languages[0]) => {
-    console.log('[LanguageSelector] Changing language to:', lang.code);
-    setSelectedLang(lang);
+    setLanguage(lang.code);
     setIsOpen(false);
-    
-    // Wait a bit then trigger Google Translate
-    setTimeout(() => {
-      const select = document.querySelector('select.goog-te-combo') as HTMLSelectElement;
-      console.log('[LanguageSelector] Google Translate select element:', select);
-      
-      if (select) {
-        console.log('[LanguageSelector] Current value:', select.value);
-        console.log('[LanguageSelector] Setting value to:', lang.code);
-        
-        select.value = lang.code;
-        
-        // Try multiple event types
-        const changeEvent = new Event('change', { bubbles: true });
-        select.dispatchEvent(changeEvent);
-        
-        // Also try click event
-        const clickEvent = new MouseEvent('click', { bubbles: true });
-        select.dispatchEvent(clickEvent);
-        
-        console.log('[LanguageSelector] Events dispatched, new value:', select.value);
-      } else {
-        console.error('[LanguageSelector] Google Translate select not found!');
-        console.log('[LanguageSelector] Available elements:', {
-          googleTranslateElement: document.getElementById('google_translate_element'),
-          allSelects: document.querySelectorAll('select'),
-          googTeCombo: document.querySelectorAll('.goog-te-combo')
-        });
-      }
-    }, 100);
   };
 
   return (
-    <>
-      {/* Hidden Google Translate Element */}
-      <div id="google_translate_element" className="hidden"></div>
-      
-      {/* Custom Language Selector */}
-      <div className="relative" ref={dropdownRef}>
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white border border-gray-200 hover:border-gray-300 transition-all duration-200 shadow-sm hover:shadow-md"
-          aria-label="Select language"
-        >
-          <Globe className="h-4 w-4 text-gray-600" />
-          <span className="text-sm font-medium text-gray-700 hidden sm:inline">
-            {selectedLang.flag} {selectedLang.name}
-          </span>
-          <span className="text-sm font-medium text-gray-700 sm:hidden">
-            {selectedLang.flag}
-          </span>
-          <ChevronDown className={`h-4 w-4 text-gray-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
-        </button>
+    <div className="relative" ref={dropdownRef}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white border border-gray-200 hover:border-gray-300 transition-all duration-200 shadow-sm hover:shadow-md"
+        aria-label="Select language"
+      >
+        <Globe className="h-4 w-4 text-gray-600" />
+        <span className="text-sm font-medium text-gray-700 hidden sm:inline">
+          {selectedLang.flag} {selectedLang.name}
+        </span>
+        <span className="text-sm font-medium text-gray-700 sm:hidden">
+          {selectedLang.flag}
+        </span>
+        <ChevronDown className={`h-4 w-4 text-gray-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
 
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-[100] max-h-96 overflow-y-auto"
-            >
-              {languages.map((lang) => (
-                <button
-                  key={lang.code}
-                  onClick={() => handleLanguageChange(lang)}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
-                    selectedLang.code === lang.code
-                      ? 'bg-emerald-50 text-emerald-700 font-medium'
-                      : 'text-gray-700 hover:bg-gray-50'
-                  }`}
-                >
-                  <span className="text-xl">{lang.flag}</span>
-                  <span>{lang.name}</span>
-                  {selectedLang.code === lang.code && (
-                    <span className="ml-auto text-emerald-600">✓</span>
-                  )}
-                </button>
-              ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-[100] max-h-96 overflow-y-auto"
+          >
+            {languages.map((lang) => (
+              <button
+                key={lang.code}
+                onClick={() => handleLanguageChange(lang)}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
+                  selectedLang.code === lang.code
+                    ? 'bg-emerald-50 text-emerald-700 font-medium'
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                <span className="text-xl">{lang.flag}</span>
+                <span>{lang.name}</span>
+                {selectedLang.code === lang.code && (
+                  <span className="ml-auto text-emerald-600">✓</span>
+                )}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
