@@ -299,25 +299,6 @@
 
 /* ===== Google Translate Widget Styling ===== */
 /* Hide Google Translate banner and default widget */
-.goog-te-banner-frame,
-.goog-te-banner-frame.skiptranslate,
-iframe.skiptranslate {
-  display: none !important;
-  visibility: hidden !important;
-  height: 0 !important;
-  opacity: 0 !important;
-}
-
-body {
-  top: 0 !important;
-  position: static !important;
-}
-
-#google_translate_element {
-  display: none !important;
-}
-
-/* ===== Google Translate Widget Styling ===== */
 .goog-te-banner-frame {
   display: none !important;
 }
@@ -326,6 +307,12 @@ body {
   top: 0 !important;
 }
 
+#google_translate_element,
+#google_translate_nav {
+  display: inline-block !important;
+}
+
+#google_translate_nav .goog-te-gadget-simple,
 #google_translate_element .goog-te-gadget-simple {
   background: transparent !important;
   border: none !important;
@@ -333,10 +320,12 @@ body {
   font-size: 14px !important;
 }
 
+#google_translate_nav .goog-te-gadget-simple .goog-te-menu-value span,
 #google_translate_element .goog-te-gadget-simple .goog-te-menu-value span {
   color: #374151 !important;
 }
 
+#google_translate_nav .goog-te-gadget-icon,
 #google_translate_element .goog-te-gadget-icon {
   display: none !important;
 }

@@ -6,6 +6,7 @@ import sunsonLogo from "@assets/sunson-logo.svg";
 import { motion, AnimatePresence } from "framer-motion";
 import InteractiveSearch from "@/components/InteractiveSearch";
 import NotificationCenter from "@/components/NotificationCenter";
+import NavTranslateButton from "@/components/NavTranslateButton";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -143,6 +144,7 @@ export default function Header() {
               <div className="h-8 w-px bg-gray-200 mx-4"></div>
 
               <div className="flex items-center space-x-3">
+                <NavTranslateButton />
                 
                 <Button
                   variant="ghost"

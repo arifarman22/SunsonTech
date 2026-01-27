@@ -5,7 +5,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import GoogleTranslateWidget from "@/components/GoogleTranslateWidget";
 import Home from "@/pages/Home";
 import BankingProducts from "@/pages/products/BankingProducts";
 import HealthcareProducts from "@/pages/products/HealthcareProducts";
@@ -50,7 +49,6 @@ function App() {
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
-            <GoogleTranslateWidget />
             <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
               <Toaster />
               <Router />
