@@ -12,6 +12,24 @@ export default function GoogleTranslate() {
   const [location] = useLocation();
 
   useEffect(() => {
+    // Reinitialize Google Translate widget on route change
+    const initWidget = () => {
+      if (window.google?.translate?.TranslateElement) {
+        const element = document.getElementById('google_translate_element');
+        if (element && !element.querySelector('.goog-te-gadget')) {
+          new window.google.translate.TranslateElement(
+            {
+              pageLanguage: 'en',
+              includedLanguages: 'en,bn,hi,ar,fr,es,de,zh-CN,ja,ko,ru,pt',
+              layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+              autoDisplay: false
+            },
+            'google_translate_element'
+          );
+        }
+      }
+    };
+
     const updateLanguageDisplay = () => {
       const gadget = document.querySelector('.goog-te-gadget-simple');
       if (gadget) {
@@ -29,6 +47,17 @@ export default function GoogleTranslate() {
       }
     };
 
+    // Wait for element to be available then initialize
+    const checkAndInit = setInterval(() => {
+      const element = document.getElementById('google_translate_element');
+      if (element) {
+        clearInterval(checkAndInit);
+        initWidget();
+      }
+    }, 100);
+
+    setTimeout(() => clearInterval(checkAndInit), 3000);
+
     const observer = new MutationObserver(updateLanguageDisplay);
     const targetNode = document.getElementById('google_translate_element');
     
@@ -41,6 +70,7 @@ export default function GoogleTranslate() {
     return () => {
       observer.disconnect();
       clearInterval(interval);
+      clearInterval(checkAndInit);
     };
   }, [location]);
 
