@@ -40,9 +40,6 @@ export default function Header() {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="container-modern h-full">
-          <div className="absolute top-4 right-6 z-10">
-            <div id="google_translate_element"></div>
-          </div>
           <div className="flex items-center justify-between h-full">
             <Link href="/" data-testid="link-home">
               <motion.div
@@ -149,6 +146,8 @@ export default function Header() {
               <div className="h-8 w-px bg-gray-200 mx-4"></div>
 
               <div className="flex items-center space-x-3">
+                <PremiumLanguageSelector />
+
                 <Button
                   variant="ghost"
                   size="icon"
@@ -198,6 +197,7 @@ export default function Header() {
                 transition={{ duration: 0.4 }}
               >
                 <nav className="flex flex-col space-y-4 font-semibold">
+                  <PremiumLanguageSelector />
                   <Link href="/products/banking" className="text-gray-900 hover:text-emerald-600 py-3 px-4 rounded-xl hover:bg-emerald-50 transition-all">{t('nav.products')}</Link>
                   <Link href="/solutions/cdm" className="text-gray-900 hover:text-indigo-600 py-3 px-4 rounded-xl hover:bg-indigo-50 transition-all">{t('nav.solutions')}</Link>
                   <Link href="/about" className="text-gray-900 hover:text-purple-600 py-3 px-4 rounded-xl hover:bg-purple-50 transition-all">{t('nav.about')}</Link>

@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation } from 'wouter';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 declare global {
   interface Window {
@@ -9,38 +10,41 @@ declare global {
   }
 }
 
+const WIDGET_CONTAINER_ID = 'google_translate_element';
+
 export default function GoogleTranslate() {
   const [location] = useLocation();
+  const { language, setLanguage } = useLanguage();
+
+  const retryIntervalRef = useRef<NodeJS.Timeout>();
+  const updateIntervalRef = useRef<NodeJS.Timeout>();
+  const observerRef = useRef<MutationObserver>();
+  const selectCleanupRef = useRef<() => void>();
+  const widgetReadyRef = useRef(false);
 
   useEffect(() => {
-    let initAttempts = 0;
-    let checkInterval: NodeJS.Timeout;
-    let updateInterval: NodeJS.Timeout;
+    const applyLanguageToWidget = () => {
+      const select = document.querySelector('select.goog-te-combo') as HTMLSelectElement | null;
+      if (!select) return false;
 
-    const initializeWidget = () => {
-      if (!window.google?.translate?.TranslateElement) return false;
-      
-      const element = document.getElementById('google_translate_element');
-      if (!element) return false;
-
-      // Only initialize if not already initialized
-      if (element.querySelector('.goog-te-gadget')) return true;
-
-      try {
-        new window.google.translate.TranslateElement(
-          {
-            pageLanguage: 'en',
-            includedLanguages: 'en,bn,hi,ar,fr,es,de,zh-CN,ja,ko,ru,pt',
-            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false
-          },
-          'google_translate_element'
-        );
-        return true;
-      } catch (error) {
-        console.error('Google Translate init error:', error);
-        return false;
+      if (select.value !== language) {
+        select.value = language;
+        select.dispatchEvent(new Event('change'));
       }
+      return true;
+    };
+
+    const watchWidgetLanguageChanges = () => {
+      const select = document.querySelector('select.goog-te-combo') as HTMLSelectElement | null;
+      if (!select) return;
+
+      const handleChange = () => {
+        const value = select.value || 'en';
+        setLanguage(value);
+      };
+
+      select.addEventListener('change', handleChange);
+      selectCleanupRef.current = () => select.removeEventListener('change', handleChange);
     };
 
     const updateLanguageDisplay = () => {
@@ -60,21 +64,100 @@ export default function GoogleTranslate() {
       }
     };
 
-    // Check and initialize
-    checkInterval = setInterval(() => {
-      initAttempts++;
-      if (initializeWidget()) {
-        clearInterval(checkInterval);
-        updateInterval = setInterval(updateLanguageDisplay, 300);
+    const initializeWidget = () => {
+      if (!window.google?.translate?.TranslateElement) return false;
+
+      const element = document.getElementById(WIDGET_CONTAINER_ID);
+      if (!element) return false;
+
+      element.innerHTML = '';
+
+      try {
+        new window.google.translate.TranslateElement(
+          {
+            pageLanguage: 'en',
+            includedLanguages: 'en,bn,hi,ar,fr,es,de,zh-CN,ja,ko,ru,pt',
+            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+          },
+          WIDGET_CONTAINER_ID
+        );
+        widgetReadyRef.current = true;
+
+        setTimeout(() => {
+          applyLanguageToWidget();
+          watchWidgetLanguageChanges();
+          updateLanguageDisplay();
+        }, 200);
+
+        return true;
+      } catch (error) {
+        console.error('Google Translate init error:', error);
+        return false;
       }
-      if (initAttempts > 100) clearInterval(checkInterval); // Stop after 10 seconds
-    }, 100);
+    };
+
+    const setupWidget = () => {
+      const checkAndInit = () => {
+        if (window.googleTranslateReady || window.google?.translate?.TranslateElement) {
+          const initialized = initializeWidget();
+
+          if (initialized) {
+            const targetNode = document.getElementById(WIDGET_CONTAINER_ID);
+            if (targetNode) {
+              observerRef.current = new MutationObserver(updateLanguageDisplay);
+              observerRef.current.observe(targetNode, { childList: true, subtree: true });
+            }
+
+            updateIntervalRef.current = setInterval(updateLanguageDisplay, 500);
+
+            if (retryIntervalRef.current) {
+              clearInterval(retryIntervalRef.current);
+              retryIntervalRef.current = undefined;
+            }
+          }
+        }
+      };
+
+      checkAndInit();
+
+      retryIntervalRef.current = setInterval(checkAndInit, 100);
+
+      setTimeout(() => {
+        if (retryIntervalRef.current) {
+          clearInterval(retryIntervalRef.current);
+          retryIntervalRef.current = undefined;
+        }
+      }, 10000);
+
+      window.addEventListener('googleTranslateLoaded', checkAndInit);
+      return () => window.removeEventListener('googleTranslateLoaded', checkAndInit);
+    };
+
+    const teardownListener = setupWidget();
 
     return () => {
-      clearInterval(checkInterval);
-      clearInterval(updateInterval);
+      if (retryIntervalRef.current) clearInterval(retryIntervalRef.current);
+      if (updateIntervalRef.current) clearInterval(updateIntervalRef.current);
+      if (observerRef.current) observerRef.current.disconnect();
+      if (selectCleanupRef.current) selectCleanupRef.current();
+      widgetReadyRef.current = false;
+      teardownListener();
     };
-  }, [location]);
+  }, [location, language, setLanguage]);
 
-  return null;
+  useEffect(() => {
+    if (!widgetReadyRef.current) return;
+    const select = document.querySelector('select.goog-te-combo') as HTMLSelectElement | null;
+    if (select && select.value !== language) {
+      select.value = language;
+      select.dispatchEvent(new Event('change'));
+    }
+  }, [language]);
+
+  return (
+    <div className="fixed top-4 right-4 z-[1200] pointer-events-auto">
+      <div id={WIDGET_CONTAINER_ID} className="shadow-sm" aria-label="Google Translate language selector" />
+    </div>
+  );
 }
