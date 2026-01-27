@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import InteractiveSearch from "@/components/InteractiveSearch";
 import NotificationCenter from "@/components/NotificationCenter";
 import PremiumLanguageSelector from "@/components/PremiumLanguageSelector";
-import GoogleTranslate from "@/components/GoogleTranslate";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Header() {
@@ -29,7 +28,6 @@ export default function Header() {
 
   return (
     <>
-      <GoogleTranslate />
       <motion.header
         className={cn(
           "fixed top-0 w-full z-50 transition-all duration-500",
