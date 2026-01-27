@@ -149,7 +149,7 @@ export default function Header() {
               <div className="h-8 w-px bg-gray-200 mx-4"></div>
 
               <div className="flex items-center space-x-3">
-                <PremiumLanguageSelector />
+                <div id="google_translate_element"></div>
 
                 <Button
                   variant="ghost"
@@ -179,7 +179,7 @@ export default function Header() {
             </nav>
 
             <div className="flex lg:hidden items-center gap-3">
-              <PremiumLanguageSelector />
+              <div id="google_translate_element_mobile"></div>
               <Button
                 variant="ghost"
                 size="icon"

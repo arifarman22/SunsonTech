@@ -1,6 +1,4 @@
 import { useEffect } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useLocation } from 'wouter';
 
 declare global {
   interface Window {
@@ -10,42 +8,40 @@ declare global {
 }
 
 export default function GoogleTranslate() {
-  const { language } = useLanguage();
-  const [location] = useLocation();
-
   useEffect(() => {
-    const triggerTranslation = () => {
-      if (!window.google?.translate) return;
-
-      // Method 1: Click the language in the iframe menu
-      const frame = document.querySelector('iframe.goog-te-menu-frame') as HTMLIFrameElement;
-      if (frame?.contentWindow) {
-        try {
-          const doc = frame.contentDocument || frame.contentWindow.document;
-          const items = doc?.querySelectorAll('.goog-te-menu2-item span.text');
-          if (items) {
-            for (let i = 0; i < items.length; i++) {
-              const el = items[i] as HTMLElement;
-              if (el.parentElement?.getAttribute('value') === language) {
-                el.click();
-                return;
-              }
-            }
-          }
-        } catch (e) {}
-      }
-
-      // Method 2: Use the select dropdown
-      const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
-      if (select && select.value !== language) {
-        select.value = language;
-        select.dispatchEvent(new Event('change', { bubbles: true }));
+    const initTranslate = () => {
+      if (window.google?.translate) {
+        const desktop = document.getElementById('google_translate_element');
+        const mobile = document.getElementById('google_translate_element_mobile');
+        
+        if (desktop && !desktop.querySelector('.goog-te-gadget')) {
+          new window.google.translate.TranslateElement(
+            {
+              pageLanguage: 'en',
+              includedLanguages: 'en,bn,hi,ar,fr,es,de,zh-CN,ja,ko,ru,pt',
+              layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
+            },
+            'google_translate_element'
+          );
+        }
+        
+        if (mobile && !mobile.querySelector('.goog-te-gadget')) {
+          new window.google.translate.TranslateElement(
+            {
+              pageLanguage: 'en',
+              includedLanguages: 'en,bn,hi,ar,fr,es,de,zh-CN,ja,ko,ru,pt',
+              layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
+            },
+            'google_translate_element_mobile'
+          );
+        }
+      } else {
+        setTimeout(initTranslate, 100);
       }
     };
 
-    const timer = setTimeout(triggerTranslation, 500);
-    return () => clearTimeout(timer);
-  }, [language, location]);
+    initTranslate();
+  }, []);
 
-  return <div id="google_translate_element" className="hidden" />;
+  return null;
 }
