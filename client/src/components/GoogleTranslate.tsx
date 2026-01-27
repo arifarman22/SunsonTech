@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useLocation } from 'wouter';
 
 declare global {
   interface Window {
@@ -8,6 +9,8 @@ declare global {
 }
 
 export default function GoogleTranslate() {
+  const [location] = useLocation();
+
   useEffect(() => {
     const updateLanguageDisplay = () => {
       const gadget = document.querySelector('.goog-te-gadget-simple');
@@ -39,7 +42,7 @@ export default function GoogleTranslate() {
       observer.disconnect();
       clearInterval(interval);
     };
-  }, []);
+  }, [location]);
 
   return null;
 }
