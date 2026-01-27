@@ -9,7 +9,7 @@ export default function NavTranslateButton() {
         new window.google.translate.TranslateElement(
           {
             pageLanguage: 'en',
-            includedLanguages: 'en,bn,hi,ar,fr,es,de,zh-CN,ja,ko,ru,pt',
+            includedLanguages: 'en,bn,hi,ar,fr,es,de,zh-CN,ja,ko,ru,pt,it,nl,pl,tr,vi,th,id,ms',
             layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
             autoDisplay: false
           },
