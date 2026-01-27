@@ -33,9 +33,9 @@ export default function NavTranslateButton() {
   }, []);
 
   return (
-    <div className="flex items-center gap-2 w-full">
+    <div className="flex items-center gap-2">
       <Languages className="h-5 w-5 text-gray-700 flex-shrink-0" />
-      <div id="google_translate_nav" className="flex-1 min-w-0" />
+      <div id="google_translate_nav" className="min-w-0" />
       {!isLoaded && <span className="text-sm text-gray-500">Loading...</span>}
     </div>
   );
