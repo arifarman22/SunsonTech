@@ -34,17 +34,39 @@ export default function LanguageSelector() {
   }, []);
 
   const handleLanguageChange = (lang: typeof languages[0]) => {
+    console.log('[LanguageSelector] Changing language to:', lang.code);
     setSelectedLang(lang);
     setIsOpen(false);
     
-    // Try to trigger Google Translate
+    // Wait a bit then trigger Google Translate
     setTimeout(() => {
       const select = document.querySelector('select.goog-te-combo') as HTMLSelectElement;
+      console.log('[LanguageSelector] Google Translate select element:', select);
+      
       if (select) {
+        console.log('[LanguageSelector] Current value:', select.value);
+        console.log('[LanguageSelector] Setting value to:', lang.code);
+        
         select.value = lang.code;
-        select.dispatchEvent(new Event('change', { bubbles: true }));
+        
+        // Try multiple event types
+        const changeEvent = new Event('change', { bubbles: true });
+        select.dispatchEvent(changeEvent);
+        
+        // Also try click event
+        const clickEvent = new MouseEvent('click', { bubbles: true });
+        select.dispatchEvent(clickEvent);
+        
+        console.log('[LanguageSelector] Events dispatched, new value:', select.value);
+      } else {
+        console.error('[LanguageSelector] Google Translate select not found!');
+        console.log('[LanguageSelector] Available elements:', {
+          googleTranslateElement: document.getElementById('google_translate_element'),
+          allSelects: document.querySelectorAll('select'),
+          googTeCombo: document.querySelectorAll('.goog-te-combo')
+        });
       }
-    }, 50);
+    }, 100);
   };
 
   return (
