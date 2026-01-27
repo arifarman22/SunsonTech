@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Languages } from 'lucide-react';
 
 declare global {
@@ -9,6 +9,8 @@ declare global {
 }
 
 export default function NavTranslateButton() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     if (!window.googleTranslateElementInit) {
       window.googleTranslateElementInit = () => {
@@ -21,6 +23,7 @@ export default function NavTranslateButton() {
           },
           'google_translate_nav'
         );
+        setTimeout(() => setIsLoaded(true), 500);
       };
 
       const script = document.createElement('script');
@@ -30,9 +33,10 @@ export default function NavTranslateButton() {
   }, []);
 
   return (
-    <div className="flex items-center gap-2">
-      <Languages className="h-5 w-5 text-gray-700" />
-      <div id="google_translate_nav" />
+    <div className="flex items-center gap-2 w-full">
+      <Languages className="h-5 w-5 text-gray-700 flex-shrink-0" />
+      <div id="google_translate_nav" className="flex-1 min-w-0" />
+      {!isLoaded && <span className="text-sm text-gray-500">Loading...</span>}
     </div>
   );
 }
