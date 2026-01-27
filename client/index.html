@@ -10,14 +10,18 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script type="text/javascript">
+      console.log('[HTML] Google Translate script tag loaded');
       // Global initialization function called by Google Translate script
       function googleTranslateElementInit() {
+        console.log('[HTML] googleTranslateElementInit called');
+        console.log('[HTML] window.google:', window.google);
         // Mark that the script is loaded
         window.googleTranslateReady = true;
         // Trigger custom event for React component to listen
         window.dispatchEvent(new Event('googleTranslateLoaded'));
+        console.log('[HTML] Event dispatched: googleTranslateLoaded');
       }
     </script>
     <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>

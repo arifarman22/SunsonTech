@@ -13,23 +13,33 @@ export default function GoogleTranslate() {
   const [location] = useLocation();
 
   useEffect(() => {
+    console.log('[GoogleTranslate] Effect running for location:', location);
     let cleanupInterval: NodeJS.Timeout;
     let updateInterval: NodeJS.Timeout;
     let observer: MutationObserver;
 
     const initializeWidget = () => {
+      console.log('[GoogleTranslate] Attempting to initialize widget');
+      console.log('[GoogleTranslate] window.google:', window.google);
+      console.log('[GoogleTranslate] TranslateElement:', window.google?.translate?.TranslateElement);
+      
       // Check if Google Translate API is available
       if (!window.google?.translate?.TranslateElement) {
+        console.log('[GoogleTranslate] Google Translate API not available yet');
         return false;
       }
 
       const element = document.getElementById('google_translate_element');
+      console.log('[GoogleTranslate] Target element:', element);
+      
       if (!element) {
+        console.log('[GoogleTranslate] Target element not found');
         return false;
       }
 
       // Clear any existing widget content
       element.innerHTML = '';
+      console.log('[GoogleTranslate] Cleared existing content');
 
       try {
         // Initialize the widget
@@ -42,9 +52,10 @@ export default function GoogleTranslate() {
           },
           'google_translate_element'
         );
+        console.log('[GoogleTranslate] Widget initialized successfully');
         return true;
       } catch (error) {
-        console.error('Failed to initialize Google Translate:', error);
+        console.error('[GoogleTranslate] Failed to initialize:', error);
         return false;
       }
     };
@@ -67,12 +78,17 @@ export default function GoogleTranslate() {
     };
 
     const setupWidget = () => {
+      console.log('[GoogleTranslate] Setting up widget');
+      console.log('[GoogleTranslate] googleTranslateReady:', window.googleTranslateReady);
+      
       // Wait for Google Translate script to be ready
       const checkAndInit = () => {
         if (window.googleTranslateReady || window.google?.translate?.TranslateElement) {
+          console.log('[GoogleTranslate] Script ready, initializing...');
           const initialized = initializeWidget();
           
           if (initialized) {
+            console.log('[GoogleTranslate] Widget initialized, setting up observers');
             // Set up mutation observer to watch for widget changes
             const targetNode = document.getElementById('google_translate_element');
             if (targetNode) {
@@ -100,6 +116,7 @@ export default function GoogleTranslate() {
       setTimeout(() => {
         if (cleanupInterval) {
           clearInterval(cleanupInterval);
+          console.log('[GoogleTranslate] Stopped trying after 10 seconds');
         }
       }, 10000);
 
@@ -111,6 +128,7 @@ export default function GoogleTranslate() {
 
     // Cleanup function
     return () => {
+      console.log('[GoogleTranslate] Cleaning up');
       if (cleanupInterval) clearInterval(cleanupInterval);
       if (updateInterval) clearInterval(updateInterval);
       if (observer) observer.disconnect();
