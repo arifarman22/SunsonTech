@@ -30,28 +30,29 @@ export default function PremiumLanguageSelector() {
     const { language, setLanguage } = useLanguage();
 
     const triggerGoogleTranslate = (langCode: string) => {
-        // Set cookies for Google Translate
-        const cookieValue = langCode === 'en' ? '' : `/en/${langCode}`;
-        document.cookie = `googtrans=${cookieValue}; path=/; SameSite=None; Secure`;
-        
-        // Trigger translation immediately
-        try {
-            const selectElement = document.querySelector('.goog-te-combo') as HTMLSelectElement;
-            if (selectElement) {
-                selectElement.value = langCode;
-                
-                // Dispatch change event
-                const event = new Event('change', { bubbles: true });
-                selectElement.dispatchEvent(event);
-                
-                // Also try the Google Translate trigger
-                if (window.google && window.google.translate && window.google.translate.TranslateElement) {
-                    window.google.translate.TranslateElement.getInstance().execute(langCode);
-                }
+        setTimeout(() => {
+            const frame = document.querySelector('iframe.goog-te-menu-frame') as HTMLIFrameElement;
+            if (frame?.contentWindow) {
+                try {
+                    const doc = frame.contentDocument || frame.contentWindow.document;
+                    const items = doc?.querySelectorAll('.goog-te-menu2-item span.text');
+                    if (items) {
+                        for (let i = 0; i < items.length; i++) {
+                            const el = items[i] as HTMLElement;
+                            if (el.parentElement?.getAttribute('value') === langCode) {
+                                el.click();
+                                return;
+                            }
+                        }
+                    }
+                } catch (e) {}
             }
-        } catch (error) {
-            console.warn('Translation trigger error:', error);
-        }
+            const select = document.querySelector('.goog-te-combo') as HTMLSelectElement;
+            if (select) {
+                select.value = langCode;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+        }, 500);
     };
 
     const handleLanguageChange = (langCode: string) => {
