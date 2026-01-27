@@ -27,7 +27,7 @@ export default function NavTranslateButton() {
       };
 
       const script = document.createElement('script');
-      script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
       document.head.appendChild(script);
     }
   }, []);
