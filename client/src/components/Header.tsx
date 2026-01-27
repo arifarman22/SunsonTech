@@ -40,6 +40,9 @@ export default function Header() {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="container-modern h-full">
+          <div className="absolute top-4 right-6 z-10">
+            <div id="google_translate_element"></div>
+          </div>
           <div className="flex items-center justify-between h-full">
             <Link href="/" data-testid="link-home">
               <motion.div
@@ -146,8 +149,6 @@ export default function Header() {
               <div className="h-8 w-px bg-gray-200 mx-4"></div>
 
               <div className="flex items-center space-x-3">
-                <div id="google_translate_element"></div>
-
                 <Button
                   variant="ghost"
                   size="icon"
@@ -176,7 +177,6 @@ export default function Header() {
             </nav>
 
             <div className="flex lg:hidden items-center gap-3">
-              <div id="google_translate_element_mobile"></div>
               <Button
                 variant="ghost"
                 size="icon"
