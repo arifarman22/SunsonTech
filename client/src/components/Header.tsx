@@ -58,14 +58,11 @@ export default function Header() {
                   />
                   <div className="absolute -inset-2 bg-gradient-primary rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300 blur-xl" />
                 </div>
-                <span className="ml-3 text-xl font-bold text-gradient hidden sm:block">
-                  SunsonTech
-                </span>
               </motion.div>
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-2">
+            <nav className="hidden lg:flex items-center space-x-2 ml-8">
               <div className="relative group">
                 <button className="flex items-center text-gray-700 hover:text-emerald-500 transition-all font-semibold text-sm py-3 px-6 rounded-2xl hover:bg-emerald-50 group">
                   <Sparkles className="mr-2 h-4 w-4 text-emerald-500" />
