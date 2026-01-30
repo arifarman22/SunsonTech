@@ -7,7 +7,6 @@ export default function Footer() {
       <div className="container-enterprise py-12">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
-            <h3 className="text-white font-semibold mb-4">Sunson Technology</h3>
             <p className="text-sm text-slate-400">
               Leading provider of self-service terminal solutions for global enterprises.
             </p>
