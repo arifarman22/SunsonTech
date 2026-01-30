@@ -1,68 +1,58 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Modern Professional Color Palette */
-  --background: 250 251 252;
-  --foreground: 8 15 25;
+  /* Enterprise Minimalist Color Palette */
+  --background: 255 255 255;
+  --foreground: 15 23 42;
   --card: 255 255 255;
-  --card-foreground: 8 15 25;
+  --card-foreground: 15 23 42;
   --popover: 255 255 255;
-  --popover-foreground: 8 15 25;
-  --primary: 16 185 129;
+  --popover-foreground: 15 23 42;
+  --primary: 30 58 138;
   --primary-foreground: 255 255 255;
-  --secondary: 241 245 249;
+  --secondary: 248 250 252;
   --secondary-foreground: 51 65 85;
-  --muted: 248 250 252;
+  --muted: 241 245 249;
   --muted-foreground: 100 116 139;
-  --accent: 99 102 241;
+  --accent: 30 58 138;
   --accent-foreground: 255 255 255;
-  --destructive: 239 68 68;
+  --destructive: 220 38 38;
   --destructive-foreground: 255 255 255;
-  --border: 229 231 235;
-  --input: 229 231 235;
-  --ring: 16 185 129;
-  --radius: 1rem;
+  --border: 226 232 240;
+  --input: 226 232 240;
+  --ring: 30 58 138;
+  --radius: 0.375rem;
   
-  /* Chart colors */
-  --chart-1: 16 185 129;
-  --chart-2: 99 102 241;
-  --chart-3: 139 92 246;
-  --chart-4: 168 85 247;
-  --chart-5: 217 70 239;
-  
-  /* Modern brand colors */
-  --brand-emerald: 16 185 129;
-  --brand-indigo: 99 102 241;
-  --brand-purple: 139 92 246;
-  --brand-slate: 51 65 85;
-  --brand-gray: 107 114 128;
-  --gradient-primary: linear-gradient(135deg, rgb(16 185 129) 0%, rgb(99 102 241) 100%);
-  --gradient-secondary: linear-gradient(135deg, rgb(99 102 241) 0%, rgb(139 92 246) 100%);
+  /* Enterprise colors */
+  --enterprise-blue: 30 58 138;
+  --enterprise-navy: 15 23 42;
+  --enterprise-gray: 71 85 105;
+  --enterprise-light: 248 250 252;
 }
 
 .dark {
-  --background: 8 15 25;
+  --background: 15 23 42;
   --foreground: 248 250 252;
-  --card: 15 23 42;
+  --card: 30 41 59;
   --card-foreground: 248 250 252;
-  --popover: 15 23 42;
+  --popover: 30 41 59;
   --popover-foreground: 248 250 252;
-  --primary: 34 197 94;
-  --primary-foreground: 8 15 25;
-  --secondary: 30 41 59;
+  --primary: 59 130 246;
+  --primary-foreground: 255 255 255;
+  --secondary: 51 65 85;
   --secondary-foreground: 248 250 252;
-  --muted: 30 41 59;
+  --muted: 51 65 85;
   --muted-foreground: 148 163 184;
-  --accent: 99 102 241;
-  --accent-foreground: 248 250 252;
-  --destructive: 220 38 38;
+  --accent: 59 130 246;
+  --accent-foreground: 255 255 255;
+  --destructive: 239 68 68;
   --destructive-foreground: 248 250 252;
-  --border: 30 41 59;
-  --input: 30 41 59;
-  --ring: 34 197 94;
+  --border: 51 65 85;
+  --input: 51 65 85;
+  --ring: 59 130 246;
 }
 
 @layer base {
@@ -72,9 +62,8 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
-    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     scroll-behavior: smooth;
-    font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -84,36 +73,36 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight;
-    font-family: 'Space Grotesk', sans-serif;
+    @apply font-semibold tracking-tight;
+    font-family: 'Inter', sans-serif;
     color: rgb(var(--foreground));
   }
   
   h1 {
-    @apply text-5xl lg:text-7xl;
-    line-height: 1.05;
-    font-weight: 800;
+    @apply text-4xl lg:text-5xl;
+    line-height: 1.2;
+    font-weight: 600;
   }
   
   h2 {
-    @apply text-4xl lg:text-6xl;
-    line-height: 1.1;
-    font-weight: 700;
+    @apply text-3xl lg:text-4xl;
+    line-height: 1.3;
+    font-weight: 600;
   }
   
   h3 {
-    @apply text-3xl lg:text-5xl;
-    line-height: 1.15;
+    @apply text-2xl lg:text-3xl;
+    line-height: 1.4;
     font-weight: 600;
   }
   
   h4 {
-    @apply text-2xl lg:text-4xl;
+    @apply text-xl lg:text-2xl;
     font-weight: 600;
   }
   
   p {
-    @apply leading-relaxed text-lg;
+    @apply leading-relaxed text-base;
     color: rgb(var(--muted-foreground));
   }
   
@@ -123,177 +112,54 @@
 }
 
 @layer components {
-  /* ===== Modern Professional Design System ===== */
+  /* ===== Enterprise Minimalist Design System ===== */
   
-  /* Glassmorphism effects */
-  .glass-modern {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+  /* Enterprise card */
+  .enterprise-card {
+    @apply bg-white border border-slate-200 rounded-md transition-all duration-200;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   }
 
-  .glass-dark {
-    background: rgba(15, 23, 42, 0.85);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  .enterprise-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-color: rgb(var(--primary));
   }
 
-  /* Modern gradient backgrounds */
-  .gradient-primary {
-    background: linear-gradient(135deg, rgb(16 185 129) 0%, rgb(99 102 241) 100%);
+  /* Enterprise button */
+  .btn-enterprise {
+    @apply px-6 py-2.5 font-medium text-sm rounded-md transition-all duration-200;
+    background: rgb(var(--primary));
+    color: white;
   }
 
-  .gradient-secondary {
-    background: linear-gradient(135deg, rgb(99 102 241) 0%, rgb(139 92 246) 100%);
+  .btn-enterprise:hover {
+    background: rgb(30 58 138 / 0.9);
   }
 
-  .gradient-mesh {
-    background: radial-gradient(circle at 25% 25%, rgb(16 185 129) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgb(99 102 241) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgb(139 92 246) 0%, transparent 50%);
+  .btn-enterprise-outline {
+    @apply px-6 py-2.5 font-medium text-sm rounded-md border border-slate-300 transition-all duration-200;
+    color: rgb(var(--foreground));
   }
 
-  /* Enhanced hover effects */
-  .hover-lift {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .hover-lift:hover {
-    transform: translateY(-12px) scale(1.02);
-    box-shadow: 0 32px 64px -12px rgba(16, 185, 129, 0.25);
-  }
-
-  /* Modern button styles */
-  .btn-modern {
-    @apply relative overflow-hidden rounded-2xl px-8 py-4 font-semibold transition-all duration-300;
-    background: linear-gradient(135deg, rgb(16 185 129), rgb(99 102 241));
-    box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
-  }
-
-  .btn-modern:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 48px rgba(16, 185, 129, 0.4);
-  }
-
-  .btn-modern::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.6s;
-  }
-
-  .btn-modern:hover::before {
-    left: 100%;
-  }
-
-  /* Card animations */
-  .card-modern {
-    @apply bg-white rounded-3xl border border-gray-100 transition-all duration-500;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-  }
-
-  .card-modern:hover {
-    transform: translateY(-8px) rotateX(2deg);
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.12);
-  }
-
-  /* Floating animations */
-  @keyframes float-modern {
-    0%, 100% {
-      transform: translateY(0px) rotate(0deg);
-    }
-    33% {
-      transform: translateY(-15px) rotate(1deg);
-    }
-    66% {
-      transform: translateY(-8px) rotate(-0.5deg);
-    }
-  }
-
-  .float-modern {
-    animation: float-modern 8s ease-in-out infinite;
-  }
-
-  /* Pulse glow effects */
-  @keyframes pulse-glow-modern {
-    0%, 100% {
-      box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
-    }
-    50% {
-      box-shadow: 0 0 60px rgba(16, 185, 129, 0.7);
-    }
-  }
-
-  .pulse-glow-modern {
-    animation: pulse-glow-modern 3s ease-in-out infinite;
-  }
-
-  /* Modern text effects */
-  .text-gradient {
-    background: linear-gradient(135deg, rgb(16 185 129), rgb(99 102 241));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .text-shadow-modern {
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  .btn-enterprise-outline:hover {
+    background: rgb(var(--muted));
+    border-color: rgb(var(--primary));
   }
 
   /* Section spacing */
-  .section-modern {
-    @apply py-20 md:py-32 lg:py-40;
+  .section-enterprise {
+    @apply py-16 md:py-20 lg:py-24;
   }
 
-  .section-modern-sm {
-    @apply py-16 md:py-24 lg:py-32;
+  /* Container */
+  .container-enterprise {
+    @apply container max-w-7xl mx-auto px-4 md:px-6 lg:px-8;
   }
 
-  /* Container variations */
-  .container-modern {
-    @apply container max-w-7xl mx-auto px-6 lg:px-8;
-  }
-
-  .container-narrow {
-    @apply container max-w-4xl mx-auto px-6 lg:px-8;
-  }
-
-  /* Modern shadows */
-  .shadow-modern {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  }
-
-  .shadow-modern-lg {
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
-  }
-
-  .shadow-modern-xl {
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.16);
-  }
-
-  /* Backdrop blur utilities */
-  .backdrop-modern {
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-  }
-
-  /* Modern border radius */
-  .rounded-modern {
-    border-radius: 1.5rem;
-  }
-
-  .rounded-modern-lg {
-    border-radius: 2rem;
-  }
-
-  .rounded-modern-xl {
-    border-radius: 2.5rem;
+  /* Enterprise header */
+  .header-enterprise {
+    @apply bg-white border-b border-slate-200;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   }
 }
 
